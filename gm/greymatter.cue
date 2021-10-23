@@ -345,15 +345,15 @@ package gm
 	cluster_key: string
 	zone_key:    string
 	name:        string
-	require_tls: bool
+	require_tls?: bool
 	secret?:     #Secret
 	ssl_config?: #SSLConfig
 	instances?: [...#Instance]
 	org_key?: string
 	// modified from protobuf
-	circuit_breakers:  #CircuitBreakers | #CircuitBreakersThresholds | *null
-	outlier_detection: #OutlierDetection | *null
-	health_checks: [...#HealthCheck]
+	circuit_breakers?:  #CircuitBreakers | #CircuitBreakersThresholds | *null
+	outlier_detection?: #OutlierDetection | *null
+	health_checks?: [...#HealthCheck]
 	lb_policy?:              string | *""
 	http_protocol_options?:  #HTTPProtocolOptions
 	http2_protocol_options?: #HTTP2ProtocolOptions
