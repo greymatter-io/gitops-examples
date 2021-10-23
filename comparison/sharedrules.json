@@ -1,0 +1,12 @@
+[
+  {
+    "checksum": "",
+    "default": {
+      "light": null
+    },
+    "name": "default",
+    "response_data": {},
+    "shared_rules_key": "default",
+    "zone_key": "default"
+  }
+]

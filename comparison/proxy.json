@@ -1,0 +1,59 @@
+[
+  {
+    "name": "default",
+    "upgrades": "",
+    "zone_key": "default",
+    "checksum": "",
+    "proxy_key": "default"
+  },
+  {
+    "domain_keys": [
+      "apple"
+    ],
+    "name": "apple",
+    "upgrades": "",
+    "zone_key": "default-zone",
+    "checksum": "09d6af2eeb95782370b149abbbbc73dbd06dbd26a8ea71f759774efeb05eec34",
+    "proxy_key": "apple"
+  },
+  {
+    "domain_keys": [
+      "banana"
+    ],
+    "name": "banana",
+    "upgrades": "",
+    "zone_key": "default-zone",
+    "checksum": "1660f65b04402f566bac75b2592941739b2b15ea9ef5d62014ab106df2290577",
+    "proxy_key": "banana"
+  },
+  {
+    "domain_keys": [
+      "lettuce"
+    ],
+    "name": "lettuce",
+    "upgrades": "",
+    "zone_key": "default-zone",
+    "checksum": "e492fd49a9ba22d3d55f305e0be11d71550ce32c509a3635382bdbade10a9b4b",
+    "proxy_key": "lettuce"
+  },
+  {
+    "domain_keys": [
+      "pear"
+    ],
+    "name": "pear",
+    "upgrades": "",
+    "zone_key": "default-zone",
+    "checksum": "4420183c7cdd60100f834921fca28c56d767f9fd48c515749cdb8202e335f3d7",
+    "proxy_key": "pear"
+  },
+  {
+    "domain_keys": [
+      "edge"
+    ],
+    "name": "edge",
+    "upgrades": "",
+    "zone_key": "default-zone",
+    "checksum": "6c1b2df0fca2ac1a930e50477df09fcb8cb5b906b460f5a1ed905838087d2e2f",
+    "proxy_key": "edge"
+  }
+]
