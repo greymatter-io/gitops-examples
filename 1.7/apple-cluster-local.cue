@@ -1,14 +1,13 @@
 package mesh
 
-// import "produce.local/gm"
-
-// Original
-// cluster_key: "apple-local"
-// zone_key:    "default-zone"
-// name:        "apple-local"
-// instances: [ {host: "127.0.0.1", port: 42071}]
-
+// Apple
 
 clusters: "apple-local": {
-    instances: [ {host: #localhost, port: #applePort}]
+    instances: [ {host: #localhost, port: #appleUpstream}]
 }
+
+clusters: apple: {
+    instances: [ {host: #localhost, port: #appleSidecar}]
+}
+
+domains: apple: port: #appleSidecar

@@ -53,7 +53,8 @@ clusters: [Name=_]: gm.#Cluster & {
 
 // Constants and shared data
 
-#applePort: 42071
+#appleUpstream: 42071
+#appleSidecar: 9003
 #localhost: "127.0.0.1"
 
 // Set defaults
