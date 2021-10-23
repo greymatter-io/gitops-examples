@@ -41,7 +41,7 @@ listeners: [Name=_]: gm.#Listener & {
 	name:         Name
 	listener_key: Name
     domain_keys: [string] | *["\(Name)"]
-	#EdgeListenerDefaults
+	#PlaintextListenerDefaults
 }
 
 // Clusters template w/ defaults
@@ -58,7 +58,7 @@ clusters: [Name=_]: gm.#Cluster & {
 #localhost: "127.0.0.1"
 
 // Set defaults
-#EdgeListenerDefaults: gm.#Listener & {
+#PlaintextListenerDefaults: gm.#Listener & {
 	secret:       #EmptySecret
 	zone_key:     #DefaultZone
 	http_filters: #default_filters

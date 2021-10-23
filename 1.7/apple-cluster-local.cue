@@ -11,3 +11,8 @@ clusters: apple: {
 }
 
 domains: apple: port: #appleSidecar
+
+listeners: apple: {
+    port: #appleSidecar
+    ip: #all_interfaces
+}
