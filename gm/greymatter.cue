@@ -412,10 +412,10 @@ package gm
 	route_key:  string
 	domain_key: string
 	zone_key:   string
-	// path is deprecated
+	// path is deprecated (remove it?)
 	path?:          string
 	route_match?:   #RouteMatch
-	prefix_rewrite: string | *null
+	prefix_rewrite?: string | *null
 	redirects?: [...#Redirect]
 	shared_rules_key?: string
 	rules:             [...#Rule] | *null
