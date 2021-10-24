@@ -413,8 +413,8 @@ package gm
 	domain_key: string
 	zone_key:   string
 	// path is deprecated (remove it?)
-	path?:          string
-	route_match?:   #RouteMatch
+	path?:           string
+	route_match?:    #RouteMatch
 	prefix_rewrite?: string | *null
 	redirects?: [...#Redirect]
 	shared_rules_key?: string
@@ -548,10 +548,10 @@ package gm
 
 #ClusterConstraint: {
 	constraint_key?: string
-	cluster_key:    string
-	metadata?:      [...#Metadata] | *null
-	properties?:    [...#Metadata] | *null
-	response_data?: #ResponseData
+	cluster_key:     string
+	metadata?:       [...#Metadata] | *null
+	properties?:     [...#Metadata] | *null
+	response_data?:  #ResponseData
 	// We probably do not want to default the weight value
 	weight: uint32
 }

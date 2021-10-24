@@ -132,3 +132,18 @@ into arrays of objects that is easier for our sync script.sh to iterate.
 ./export.sh domains
 ```
 
+## Repo Stats
+
+Count lines of CUE
+
+```
+cat defaults.cue 1.7/*.cue
+```
+
+Count lines of CUE without whitespace or comments
+
+```
+cat defaults.cue 1.7/*.cue | awk '!/^(\s*|\/\/.*)$/' | wc -l
+```
+
+_Note: we exclude the gm package from our count, because users will have that generated for them_
