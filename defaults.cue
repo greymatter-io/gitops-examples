@@ -10,7 +10,7 @@ import "produce.local/gm"
 		"metrics_host":                "0.0.0.0"
 		"metrics_key_depth":           "3"
 		"metrics_key_function":        "depth"
-		"metrics_port":                39003
+		"metrics_port":                39001
 		"metrics_prometheus_uri_path": "/prometheus"
 		"metrics_receiver": {
 			"redis_connection_string": "redis://127.0.0.1:6379"
@@ -66,10 +66,16 @@ routes: [Name=_]: gm.#Route & {
 
 // Constants and shared data
 
-#appleUpstream:  42071
-#bananaUpstream: 42069
-#appleSidecar:   9003
-#localhost:      "127.0.0.1"
+#bananaUpstream:     42069
+#bananaSidecar:      9001
+#appleUpstream:      42071
+#appleSidecar:       9003
+#lettuceSidecar:     9004
+#catalogUpstream:    8080
+#controlAPIUpstream: 5555
+#lettuceUpstream:    42072
+#dashboardUpstream:  1337
+#localhost:          "127.0.0.1"
 
 // Set defaults
 #PlaintextListenerDefaults: gm.#Listener & {
