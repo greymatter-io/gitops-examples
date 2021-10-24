@@ -66,9 +66,10 @@ routes: [Name=_]: gm.#Route & {
 
 // Constants and shared data
 
-#appleUpstream: 42071
-#appleSidecar:  9003
-#localhost:     "127.0.0.1"
+#appleUpstream:  42071
+#bananaUpstream: 42069
+#appleSidecar:   9003
+#localhost:      "127.0.0.1"
 
 // Set defaults
 #PlaintextListenerDefaults: gm.#Listener & {
