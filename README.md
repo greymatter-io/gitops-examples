@@ -1,6 +1,14 @@
-# produce-aisle
+# produce-aisle (CUE Edition)
 
-A test gitops repository for `greymatter sync`
+Here we demonstrate configuring a local mesh with configuration written entirely
+in CUE, henceforth stylized as "CUE".
+
+
+
+
+
+    
+
 
 
 ## Getting Values
