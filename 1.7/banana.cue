@@ -19,6 +19,7 @@ clusters: banana: {
 listeners: banana: {
 	port: #bananaSidecar
 	ip:   #all_interfaces
+	http_filters: gm_metrics: metrics_port: 39001
 }
 
 routes: "banana-local": {

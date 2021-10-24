@@ -15,6 +15,7 @@ domains: pear: port: #pearSidecar
 listeners: pear: {
 	ip:   #all_interfaces
 	port: #pearSidecar
+	http_filters: gm_metrics: metrics_port: 39002
 }
 
 routes: "pear-local": {

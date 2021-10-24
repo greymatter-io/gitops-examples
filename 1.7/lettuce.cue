@@ -15,6 +15,7 @@ domains: lettuce: port: #lettuceSidecar
 listeners: lettuce: {
 	ip:   #all_interfaces
 	port: #lettuceSidecar
+	http_filters: gm_metrics: metrics_port: 39004
 }
 
 routes: "lettuce-local": {

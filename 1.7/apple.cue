@@ -17,6 +17,7 @@ domains: apple: port: #appleSidecar
 listeners: apple: {
 	port: #appleSidecar
 	ip:   #all_interfaces
+	http_filters: gm_metrics: metrics_port: 39003
 }
 
 routes: "apple-local": {

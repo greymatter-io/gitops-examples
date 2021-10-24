@@ -10,7 +10,8 @@ import "produce.local/gm"
 		"metrics_host":                "0.0.0.0"
 		"metrics_key_depth":           "3"
 		"metrics_key_function":        "depth"
-		"metrics_port":                39001
+		// int OR a default allows us to override it
+		"metrics_port":                int | *39001
 		"metrics_prometheus_uri_path": "/prometheus"
 		"metrics_receiver": {
 			"redis_connection_string": "redis://127.0.0.1:6379"
