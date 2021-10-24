@@ -77,6 +77,7 @@ routes: [Name=_]: gm.#Route & {
 #lettuceUpstream:    42072
 #pearUpstream:       42070
 #pearSidecar:        9002
+#edgePort:           10808
 #localhost:          "127.0.0.1"
 
 // Set defaults

@@ -19,6 +19,7 @@ package gm
 	checksum?: string
 }
 
+// TODO(cm): this type is likely malformed/superfluous
 #Metadata: {
 	metadata?: [...#Metadatum]
 }
@@ -423,7 +424,7 @@ package gm
 	retry_policy?:     #RetryPolicy | *null
 	high_priority?:    bool
 	filter_metadata?: {
-		[string]: #Metadata
+		[string]: [...#Metadatum]
 	}
 	filter_configs?: {
 		[string]: #Any

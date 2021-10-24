@@ -17,7 +17,8 @@ routes: root: {
 			value: "depth"
 		},
 		{
-			key: "metrics_key_depth", value: "1"
+			key:   "metrics_key_depth"
+			value: "1"
 		},
 	]
 }

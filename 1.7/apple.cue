@@ -21,6 +21,7 @@ listeners: apple: {
 
 routes: "apple-local": {
 	domain_key: "apple"
+	route_match: {path: "/", match_type: "prefix"}
 	rules: [{
 		constraints: light: [{cluster_key: "apple-local", weight: 1}]
 	}]
