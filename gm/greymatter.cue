@@ -547,7 +547,7 @@ package gm
 }
 
 #ClusterConstraint: {
-	constraint_key: string | *""
+	constraint_key?: string
 	cluster_key:    string
 	metadata?:      [...#Metadata] | *null
 	properties?:    [...#Metadata] | *null
