@@ -137,7 +137,7 @@ into arrays of objects that is easier for our sync script.sh to iterate.
 Count lines of CUE
 
 ```
-cat defaults.cue 1.7/*.cue
+cat defaults.cue 1.7/*.cue | wc -l
 ```
 
 Count lines of CUE without whitespace or comments
