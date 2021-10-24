@@ -5,11 +5,11 @@ package mesh
 proxies: apple: {}
 
 clusters: "apple-local": {
-	instances: [ {host: #localhost, port: #appleUpstream}]
+	instances: [{host: #localhost, port: #appleUpstream}]
 }
 
 clusters: apple: {
-	instances: [ {host: #localhost, port: #appleSidecar}]
+	instances: [{host: #localhost, port: #appleSidecar}]
 }
 
 domains: apple: port: #appleSidecar

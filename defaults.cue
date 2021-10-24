@@ -66,15 +66,17 @@ routes: [Name=_]: gm.#Route & {
 
 // Constants and shared data
 
-#bananaUpstream:     42069
-#bananaSidecar:      9001
-#appleUpstream:      42071
 #appleSidecar:       9003
-#lettuceSidecar:     9004
+#appleUpstream:      42071
+#bananaSidecar:      9001
+#bananaUpstream:     42069
 #catalogUpstream:    8080
 #controlAPIUpstream: 5555
-#lettuceUpstream:    42072
 #dashboardUpstream:  1337
+#lettuceSidecar:     9004
+#lettuceUpstream:    42072
+#pearUpstream:       42070
+#pearSidecar:        9002
 #localhost:          "127.0.0.1"
 
 // Set defaults
