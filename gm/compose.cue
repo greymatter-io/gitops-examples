@@ -1,3 +1,0 @@
-package gm
-
-#GMProxy: {}
