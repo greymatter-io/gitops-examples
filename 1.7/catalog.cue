@@ -1,9 +1,15 @@
 package mesh
 
+// Catalog
+
+// Templates are defined in defaults.cue, and defaults.cue imports schemas from gm/greymatter.cue
+
+// Provide Name=catalog to the clusters template
 clusters: catalog: {
 	instances: [ {host: #localhost, port: #catalogUpstream}]
 }
 
+// Provide Name=catalog to the routes template.
 routes: catalog: {
 	domain_key: "edge"
 	route_match: {
