@@ -19,6 +19,7 @@ in CUE.
   mesh configs in a familiar format
 * **sync.sh** wraps the latest `greymatter` CLI, and syncs the cue configs on
   disk to Control API.
+* **TUTORIAL.md** is an introduction to CUE.
 
 Note, **defaults.cue** could be named anything, and `package mesh` could just
 as well be `package dodge_caravan`. All that matters is that both **defaults**
@@ -34,24 +35,41 @@ and the files in 1.7 declare the same package.
 ## Explore Config Outputs
 
 The **1.7** directory, when combined with **defaults.cue**, renders to a single
-JSON object of the following shape.
+JSON object of the following shape (abridged).
 
 ```json
 {
-  "domains": {...}
-  "clusters": {...}
-  "listeners": {...}
-  "proxies": {...}
+  "domains": {
+    "pear": {
+      "port": 9002,
+      "domain_key": "pear",
+      "zone_key": "default-zone",
+      "name": "*"
+    },
+    "apple": {...},
+    "banana": {...},
+    "lettuce": {...},
+    "edge": {...}
+  },
+  "clusters": {...},
+  "listeners": {...},
+  "proxies": {...},
   "routes": {...}
 }
 ```
-_Note: the sync.sh script extracts mesh configs from this object and applies them_
 
 Render the entire object like this.
 
 ```
 cue export ./1.7/
 ```
+
+The immediate children of each mesh config type is a key that corresponds to
+the primary key for that type. In our expanded example of above, the children
+of "domains" correspond to the "domain_key" field. Under clusters, the child
+keys would correspond to the "cluster_key" field, etc.
+
+The sync.sh script extracts mesh configs from this object and applies them.
 
 Render individual sub-fields with the `-e` (expression) flag. We need quotes
 to access keys that contain hyphens (see TUTORIAL).
