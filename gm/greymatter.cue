@@ -28,7 +28,6 @@ package gm
 	value?: string
 }
 
-
 #Listener: {
 	listener_key: string
 	zone_key:     string
@@ -342,12 +341,12 @@ package gm
 }
 
 #Cluster: {
-	cluster_key: string
-	zone_key:    string
-	name:        string
+	cluster_key:  string
+	zone_key:     string
+	name:         string
 	require_tls?: bool
-	secret?:     #Secret
-	ssl_config?: #SSLConfig
+	secret?:      #Secret
+	ssl_config?:  #SSLConfig
 	instances?: [...#Instance]
 	org_key?: string
 	// modified from protobuf
@@ -413,15 +412,15 @@ package gm
 	domain_key: string
 	zone_key:   string
 	// path is deprecated
-	path?:             string
-	route_match?:      #RouteMatch
-	prefix_rewrite:    string | *null
-	redirects:         [...#Redirect] | *null
+	path?:          string
+	route_match?:   #RouteMatch
+	prefix_rewrite: string | *null
+	redirects?: [...#Redirect]
 	shared_rules_key?: string
 	rules:             [...#Rule] | *null
-	response_data:     #ResponseData
-	cohort_seed:       string | *null
-	retry_policy:      #RetryPolicy | *null
+	response_data?:    #ResponseData
+	cohort_seed?:      string | *null
+	retry_policy?:     #RetryPolicy | *null
 	high_priority?:    bool
 	filter_metadata?: {
 		[string]: #Metadata
@@ -440,16 +439,16 @@ package gm
 }
 
 #RouteMatch: {
-	path?:      string
-	matchType?: string
+	path:       string
+	match_type: string
 }
 
 #Redirect: {
-	name?:         string
-	from?:         string
-	to?:           string
-	redirectType?: string
-	headerConstraints?: [...#HeaderConstraint]
+	name?:          string
+	from?:          string
+	to?:            string
+	redirect_type?: string
+	header_constraints?: [...#HeaderConstraint]
 }
 
 #Header: {
@@ -535,9 +534,9 @@ package gm
 }
 
 #AllConstraints: {
-	light: [...#ClusterConstraint] | *null
-	dark:  [...#ClusterConstraint] | *null
-	tap:   [...#ClusterConstraint] | *null
+	light?: [...#ClusterConstraint] | *null
+	dark?:  [...#ClusterConstraint] | *null
+	tap?:   [...#ClusterConstraint] | *null
 }
 
 #Constraints: {
@@ -549,9 +548,9 @@ package gm
 #ClusterConstraint: {
 	constraint_key: string | *""
 	cluster_key:    string
-	metadata:       [...#Metadata] | *null
-	properties:     [...#Metadata] | *null
-	response_data:  #ResponseData
+	metadata?:      [...#Metadata] | *null
+	properties?:    [...#Metadata] | *null
+	response_data?: #ResponseData
 	// We probably do not want to default the weight value
 	weight: uint32
 }
@@ -563,9 +562,9 @@ package gm
 	default:          #AllConstraints
 	rules:            [...#Rule] | *null
 	response_data:    #ResponseData
-	cohort_seed:      string | *null
+	cohort_seed?:     string | *null
 	properties?:      [...#Metadata] | *null
-	retry_policy:     #RetryPolicy | *null
+	retry_policy?:    #RetryPolicy | *null
 	org_key?:         string
 	checksum?:        #Checksum
 }

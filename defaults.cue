@@ -31,31 +31,44 @@ import "produce.local/gm"
 
 // Domain template with defaults
 domains: [Name=_]: gm.#Domain & {
-    name: "*"
-    domain_key: Name
-    zone_key: #DefaultZone
+	name:       "*"
+	domain_key: Name
+	zone_key:   #DefaultZone
 }
 
 // Listeners template w/ defaults
 listeners: [Name=_]: gm.#Listener & {
 	name:         Name
 	listener_key: Name
-    domain_keys: [string] | *["\(Name)"]
+	domain_keys:  [string] | *["\(Name)"]
 	#PlaintextListenerDefaults
 }
 
 // Clusters template w/ defaults
 clusters: [Name=_]: gm.#Cluster & {
-    name: Name
-    cluster_key: Name
-    zone_key: #DefaultZone
+	name:        Name
+	cluster_key: Name
+	zone_key:    #DefaultZone
+}
+
+proxies: [Name=_]: gm.#Proxy & {
+	proxy_key:   Name
+	name:        Name
+	domain_keys: [string] | *["\(Name)"]
+	zone_key:    #DefaultZone
+}
+
+routes: [Name=_]: gm.#Route & {
+	zone_key:    #DefaultZone
+	route_key:   Name
+	route_match: gm.#RouteMatch | {path: "/", match_type: "prefix"}
 }
 
 // Constants and shared data
 
 #appleUpstream: 42071
-#appleSidecar: 9003
-#localhost: "127.0.0.1"
+#appleSidecar:  9003
+#localhost:     "127.0.0.1"
 
 // Set defaults
 #PlaintextListenerDefaults: gm.#Listener & {

@@ -1,0 +1,3 @@
+package mesh
+
+proxies: edge: {}
