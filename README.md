@@ -71,6 +71,51 @@ keys would correspond to the "cluster_key" field, etc.
 
 The sync.sh script extracts mesh configs from this object and applies them.
 
+<details>
+<summary>Sync output (requires latest CLI)</summary>
+
+```
+0 % ./sync.sh 
+2021/10/24 15:21:23 type: domain code: 200 primary key: apple
+2021/10/24 15:21:23 type: domain code: 200 primary key: banana
+2021/10/24 15:21:23 type: domain code: 200 primary key: edge
+2021/10/24 15:21:23 type: domain code: 200 primary key: lettuce
+2021/10/24 15:21:23 type: domain code: 200 primary key: pear
+2021/10/24 15:21:24 type: cluster code: 200 primary key: apple-local
+2021/10/24 15:21:24 type: cluster code: 200 primary key: apple
+2021/10/24 15:21:24 type: cluster code: 200 primary key: banana-local
+2021/10/24 15:21:24 type: cluster code: 200 primary key: banana
+2021/10/24 15:21:24 type: cluster code: 200 primary key: control-api
+2021/10/24 15:21:24 type: cluster code: 200 primary key: dashboard
+2021/10/24 15:21:24 type: cluster code: 200 primary key: lettuce-local
+2021/10/24 15:21:24 type: cluster code: 200 primary key: lettuce
+2021/10/24 15:21:24 type: cluster code: 200 primary key: pear-local
+2021/10/24 15:21:24 type: cluster code: 200 primary key: pear
+2021/10/24 15:21:24 type: cluster code: 200 primary key: catalog
+2021/10/24 15:21:24 type: listener code: 200 primary key: apple
+2021/10/24 15:21:24 type: listener code: 200 primary key: banana
+2021/10/24 15:21:24 type: listener code: 200 primary key: lettuce
+2021/10/24 15:21:24 type: listener code: 200 primary key: pear
+2021/10/24 15:21:24 type: proxy code: 200 primary key: apple
+2021/10/24 15:21:24 type: proxy code: 200 primary key: banana
+2021/10/24 15:21:24 type: proxy code: 200 primary key: edge
+2021/10/24 15:21:24 type: proxy code: 200 primary key: lettuce
+2021/10/24 15:21:24 type: proxy code: 200 primary key: pear
+2021/10/24 15:21:24 type: route code: 200 primary key: apple-local
+2021/10/24 15:21:24 type: route code: 200 primary key: apple
+2021/10/24 15:21:24 type: route code: 200 primary key: banana-local
+2021/10/24 15:21:24 type: route code: 200 primary key: banana
+2021/10/24 15:21:24 type: route code: 200 primary key: control-api
+2021/10/24 15:21:24 type: route code: 200 primary key: root
+2021/10/24 15:21:24 type: route code: 200 primary key: lettuce-local
+2021/10/24 15:21:24 type: route code: 200 primary key: lettuce
+2021/10/24 15:21:24 type: route code: 200 primary key: pear-local
+2021/10/24 15:21:24 type: route code: 200 primary key: pear
+2021/10/24 15:21:24 type: route code: 200 primary key: catalog
+```
+
+</details>
+
 Render individual sub-fields with the `-e` (expression) flag. We need quotes
 to access keys that contain hyphens (see TUTORIAL).
 
