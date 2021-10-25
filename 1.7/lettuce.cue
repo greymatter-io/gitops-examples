@@ -19,7 +19,7 @@ clusters: lettuce: {
 }
 
 // Provide Name=lettuce to the domains template, and also set the
-// nest field "port" to the value of #lettuceSidecar
+// nested field "port" to the value of #lettuceSidecar
 domains: lettuce: port: #lettuceSidecar
 
 // Provide Name=lettuce to the listeners template. Set the deeply-nested
