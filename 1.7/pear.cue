@@ -19,7 +19,7 @@ clusters: pear: {
 }
 
 // Provide Name=pear to the domains template, and also set the
-// nest field "port" to the value of #pearSidecar
+// nested field "port" to the value of #pearSidecar
 domains: pear: port: #pearSidecar
 
 // Provide Name=pear to the listeners template. Set the deeply-nested
