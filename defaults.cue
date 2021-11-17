@@ -6,21 +6,9 @@ import "produce.local/gm"
 #all_interfaces: "0.0.0.0"
 #localhost:      "127.0.0.1"
 
-// Ports for the apple service
-#appleSidecar:  9003
-#appleUpstream: 42071
-
-// Ports for the banana service
-#bananaSidecar:  9001
-#bananaUpstream: 42069
-
-// Ports for the lettuce service
-#lettuceSidecar:  9004
-#lettuceUpstream: 42072
-
-// Ports for the pear service
-#pearUpstream: 42070
-#pearSidecar:  9002
+// Ports for the caddy service
+#caddySidecar:  9003
+#caddyUpstream: 4420
 
 // Ports for Grey Matter core services
 #catalogUpstream:    8080
@@ -29,37 +17,11 @@ import "produce.local/gm"
 #edgePort:           10808
 
 // Zone definition that everything shares
-#DefaultZone: "default-zone"
-
-//
-// Templates are an advanced concept with powerful code-reuse capability
-// docs: https://cuelang.org/docs/tutorials/tour/types/templates/
-//
-
-// NOTE: the domains, listeners, clusters, etc. keys defined here literally ARE
-// the top-level keys that we render in our final JSON export. But we supply
-// the concrete values to these templates with the files in the 1.7 directory.
-
-// Each of these templates takes a single parameter, Name. Using a template
-// looks like this in CUE:
-//
-//                         ,--- port must be provided a concrete value
-//    domains: myDomain: port: 1001
-//                ^-- Name param
-//
-// The output of the above usage of the "domains" template is is
-//    "domains: {
-//       "myDomain": {
-//         "zone_key": "default-zone",   <-- Taken from #DefaultZone def.
-//         "port": 1001,                 <-- Provided a value explicitly
-//         "domain_key": "pear",         <-- Populated by Name parameter
-//         "name": "*"                   <-- The default value
-//       }
-//    }
-//
+#DefaultZone: "zone-default-zone"
 
 // Domain template 
 domains: [Name=_]: gm.#Domain & {
+	// provide a host string, or accept any "*" by default
 	name:       string | *"*"
 	domain_key: Name
 	zone_key:   #DefaultZone
@@ -69,9 +31,7 @@ domains: [Name=_]: gm.#Domain & {
 listeners: [Name=_]: gm.#Listener & {
 	name:         Name
 	listener_key: Name
-	// We interpolate the Name paramter in a default array-of-string! Wow!
-	domain_keys: [string] | *["\(Name)"]
-	// Embedded struct
+	domain_keys:  [string] | *["\(Name)"]
 	#PlaintextListenerDefaults
 }
 
