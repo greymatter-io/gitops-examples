@@ -9,7 +9,8 @@ proxies: edge: {}
 
 // Provide Name=edge to the domains template, and also set the
 // nest field "port" to the value of #edgePort
-domains: edge: port: #edgePort
+//domains: edge: port: #edgePort
+domains: edge: port: 4464
 
 //
 // Edge ingress for caddy
