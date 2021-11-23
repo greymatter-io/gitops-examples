@@ -1,1 +1,1 @@
-{ "proxy_key": "apple", "zone_key": "default-zone", "name": "apple", "domain_keys": ["apple"] }
+{ "proxy_key": "apple", "zone_key": "default-zone", "name": "apple", "listener_keys": ["apple"], "domain_keys": ["apple"] }
