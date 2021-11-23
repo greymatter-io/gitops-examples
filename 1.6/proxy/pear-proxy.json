@@ -1,1 +1,1 @@
-{ "proxy_key": "pear", "zone_key": "default-zone", "name": "pear", "domain_keys": ["pear"] }
+{ "proxy_key": "pear", "zone_key": "default-zone", "name": "pear", "listener_keys": ["pear"], "domain_keys": ["pear"] }
