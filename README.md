@@ -22,7 +22,7 @@ in CUE.
 * **TUTORIAL.md** is an introduction to CUE.
 
 Note, **defaults.cue** could be named anything, and `package mesh` could just
-as well be `package dodge_caravan`. All that matters is that both **defaults**
+as well be `package dodge_caravan`. All that matters is that both **defaults.cue**
 and the files in 1.7 declare the same package.
 
 ## Requirements
