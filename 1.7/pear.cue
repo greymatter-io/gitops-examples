@@ -15,7 +15,7 @@ clusters: "pear-local": {
 
 // Provide Name=pear to the clusters template
 clusters: pear: {
-	instances: [{host: #localhost, port: #pearSidecar}]
+	instances: []
 }
 
 // Provide Name=pear to the domains template, and also set the

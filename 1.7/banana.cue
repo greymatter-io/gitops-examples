@@ -15,7 +15,7 @@ clusters: "banana-local": {
 
 // Provide Name=banana to the clusters template
 clusters: banana: {
-	instances: [{host: #localhost, port: #bananaSidecar}]
+	instances: []
 }
 
 // Provide Name=banana to the domains template, and also set the

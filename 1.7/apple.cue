@@ -15,7 +15,7 @@ clusters: "apple-local": {
 
 // Provide Name=apple to the clusters template
 clusters: apple: {
-	instances: [{host: #localhost, port: #appleSidecar}]
+	instances: []
 }
 
 // Provide Name=apple to the domains template, and also set the

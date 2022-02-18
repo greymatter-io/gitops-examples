@@ -15,7 +15,7 @@ clusters: "lettuce-local": {
 
 // Provide Name=lettuce to the clusters template
 clusters: lettuce: {
-	instances: [{host: #localhost, port: #lettuceSidecar}]
+	instances: []
 }
 
 // Provide Name=lettuce to the domains template, and also set the

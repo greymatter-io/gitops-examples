@@ -17,7 +17,4 @@ spec:
         - name: apple
           image: python:3
           command: ["python"]
-          args: ["-m", "http.server", "42071"]
-          ports:
-          - name: ingress
-            containerPort: 42071
+          args: ["-m", "http.server", "8080"]
