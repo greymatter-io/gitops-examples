@@ -7,20 +7,20 @@ import "produce.local/gm"
 #localhost:      "127.0.0.1"
 
 // Ports for the apple service
-#appleSidecar:  9003
-#appleUpstream: 42071
+#appleSidecar:  10808
+#appleUpstream: 8080
 
 // Ports for the banana service
-#bananaSidecar:  9001
-#bananaUpstream: 42069
+#bananaSidecar:  10808
+#bananaUpstream: 8080
 
 // Ports for the lettuce service
-#lettuceSidecar:  9004
-#lettuceUpstream: 42072
+#lettuceSidecar:  10808
+#lettuceUpstream: 8080
 
 // Ports for the pear service
-#pearUpstream: 42070
-#pearSidecar:  9002
+#pearUpstream: 10808
+#pearSidecar:  8080
 
 // Ports for Grey Matter core services
 #catalogUpstream:    8080

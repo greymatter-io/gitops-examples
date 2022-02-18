@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pear
+  annotations:
+    greymatter.io/configure-sidecar: "false"
+spec:
+  selector:
+    matchLabels:
+      app: pear
+  template:
+    metadata:
+      labels:
+        app: pear
+    spec:
+      containers:
+        - name: pear
+          image: python:3
+          command: ["python"]
+          args: ["-m", "http.server", "42071"]
+          ports:
+          - name: ingress
+            containerPort: 42071
