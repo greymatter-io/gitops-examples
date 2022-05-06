@@ -1,0 +1,13 @@
+#!/bin/bash
+set -e
+
+# Fetch our submodule from git
+./scripts/update
+
+for dependency in git cue
+do
+    if ! which $dependency &> /dev/null; then
+        echo "$dependency is missing from your \$PATH"
+        exit 1
+    fi
+done

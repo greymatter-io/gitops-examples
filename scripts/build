@@ -1,0 +1,34 @@
+#!/bin/bash
+set -e
+
+# default build will evaluate the local cue and make sure it's acceptable.
+cmd_default () {
+    cue eval -c EXPORT.cue -e all_configs
+}
+
+# fmt will run cue fmt against the entire cue project.
+cmd_fmt () {
+    cue fmt .
+}
+
+cmd_help () {
+    echo "USAGE:"
+    echo "./scripts/build [help|fmt]"
+}
+
+if [[ $# -eq "0" ]]; then
+    cmd_default
+    exit 0
+fi
+ARG=$1
+shift
+case $ARG in
+    help|fmt)
+        cmd_$ARG $@
+        ;;
+    *)
+        echo "unknown arg: $ARG"
+        cmd_help
+        exit 1
+        ;;
+esac
