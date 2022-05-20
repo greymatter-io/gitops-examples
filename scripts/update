@@ -1,0 +1,45 @@
+#!/bin/bash
+set -e
+
+cmd_default () {
+    # update main branch from origin/main
+    git fetch origin main:main
+    
+    # update, but not pull or initialize, submodules.
+    git submodule update
+}
+
+cmd_upstream () {
+    git submodule update
+
+    # accept a param for a release version or commit
+    local commit=$1
+    [[ -z $commit ]] && echo "missing arg: tag or commit"
+
+    (
+        cd cue.mod/pkg/greymatter-cue
+        git checkout $commit
+    )
+}
+
+cmd_help () {
+    echo "USAGE:"
+    echo "./scripts/update [help|upstream]"
+}
+
+if [[ $# -eq "0" ]]; then
+    cmd_default
+    exit 0
+fi
+ARG=$1
+shift
+case $ARG in
+    help|upstream)
+        cmd_$ARG $@
+        ;;
+    *)
+        echo "unknown arg: $ARG"
+        cmd_help
+        exit 1
+        ;;
+esac

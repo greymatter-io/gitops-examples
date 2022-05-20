@@ -1,0 +1,4 @@
+[submodule "greymatter-cue"]
+	path = cue.mod/pkg
+	url = git@github.com:greymatter-io/greymatter-cue
+	branch = main
