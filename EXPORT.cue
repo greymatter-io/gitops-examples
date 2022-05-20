@@ -22,8 +22,8 @@ import (
 	// define our mesh configs for individual applications.
 	greymatter "produce.local/services/greymatter:services"
 
-	applications "produce.local/services/applications:services"
-	apple "produce.local/services/apple:services"
+	hamburger "produce.local/services/hamburger:services"
+	pie "produce.local/services/apple-pie:services"
 
 	// NOTE: import paths must be aliased to their respective folders under the services package
 	// otherwise CUE will not evaluate properly. An example import path:
@@ -38,8 +38,8 @@ greymatter_configs: greymatter.Redis.config +
 	greymatter.Dashboard.config +
 	greymatter.Catalog.config
 
-application_configs: applications.Banana.config +
-	applications.Lettuce.config +
-	apple.Apple.config
+application_configs: pie.Banana.config +
+	hamburger.Lettuce.config +
+	pie.Apple.config
 
 all_configs: greymatter_configs + application_configs
