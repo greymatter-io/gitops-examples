@@ -4,7 +4,8 @@ metadata:
   name: banana
   namespace: produce-aisle
   annotations:
-    greymatter.io/configure-sidecar: "false"
+    greymatter.io/inject-sidecar-to: "8080"
+    greymatter.io/configure-sidecar: "true"
 spec:
   selector:
     matchLabels:
