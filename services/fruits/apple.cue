@@ -1,5 +1,7 @@
 package services
 
+import greymatter "greymatter.io/api"
+
 // Grey Matter configuration for the Apple service
 
 let Name = "apple"
@@ -16,6 +18,9 @@ apple_config: [
 	#listener & {
 		listener_key: AppleIngressName
 		_spire_self:  Name
+		_gm_observables_topic: Name
+		_is_ingress: true
+		_enable_rbac: true
 	},
 	// upstream_port -> port your service is listening on,
 	#cluster & {cluster_key: AppleIngressName, _upstream_port: 8080},
@@ -26,8 +31,8 @@ apple_config: [
 	// Shared apple proxy object
 	#proxy & {
 		proxy_key: Name
-		domain_keys: [Name]
-		listener_keys: [Name]
+		domain_keys: [AppleIngressName]
+		listener_keys: [AppleIngressName]
 	},
 
 
@@ -55,15 +60,15 @@ apple_config: [
 
 
 
-	#catalogservice & {
+	greymatter.#CatalogService & {
 		name:                      Name
 		mesh_id:                   defaults.mesh_name
 		service_id:                Name
-		// version:                   "v1.0.0"
+		version:                   "v1.0.0"
 		description:               "Apple service that serves up apples!"
 		api_endpoint:              "/services/\(Name)/"
 		api_spec_endpoint:         "/services/\(Name)/"
-		// business_impact:           "low"
+		business_impact:           "low"
 		enable_instance_metrics:   true
 		enable_historical_metrics: false
 	},

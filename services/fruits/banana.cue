@@ -1,5 +1,7 @@
 package services
 
+import greymatter "greymatter.io/api"
+
 // Grey Matter configuration for the Banana service
 
 let Name = "banana"
@@ -16,8 +18,10 @@ banana_config: [
 	#listener & {
 		listener_key: BananaIngressName
 		_spire_self:  Name
+		_gm_observables_topic: Name
+		_is_ingress: true
 	},
-	#cluster & {cluster_key: BananaIngressName, _upstream_port: 9090}, // upstream_port -> port your service is listening on
+	#cluster & {cluster_key: BananaIngressName, _upstream_port: 8080}, // upstream_port -> port your service is listening on
 	#route & {route_key:     BananaIngressName},
 
 
@@ -25,8 +29,8 @@ banana_config: [
 	// Shared Banana proxy object
 	#proxy & {
 		proxy_key: Name
-		domain_keys: [Name]
-		listener_keys: [Name]
+		domain_keys: [BananaIngressName]
+		listener_keys: [BananaIngressName]
 	},
 
 
@@ -55,15 +59,15 @@ banana_config: [
 	
 
 	// Grey Matter catalog service entry
-	#catalogservice & {
+	greymatter.#CatalogService & {
 		name:                      Name
 		mesh_id:                   defaults.mesh_name
 		service_id:                Name
-		// version:                   "v0.0.1"
+		version:                   "v0.0.1"
 		description:               "Banana service that serves up bananas!"
 		api_endpoint:              "/services/\(Name)/"
 		api_spec_endpoint:         "/services/\(Name)/"
-		// business_impact:           "low"
+		business_impact:           "low"
 		enable_instance_metrics:   true
 		enable_historical_metrics: false
 	},

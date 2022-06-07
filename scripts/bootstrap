@@ -1,9 +1,6 @@
 #!/bin/bash
 set -e
 
-# Fetch our submodule from git
-./scripts/update
-
 for dependency in git cue
 do
     if ! which $dependency &> /dev/null; then
@@ -11,3 +8,6 @@ do
         exit 1
     fi
 done
+
+# Fetch our submodule from git
+./scripts/update
