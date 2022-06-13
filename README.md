@@ -11,17 +11,21 @@ An example for a dev-team GitOps repository usng CUE :rocket:
 ## Getting Started
 
 ### Setting up the repo
+
 Install the greymatter-cue submodule so you can evaluate CUE:
-```
+
+```sh
 ./scripts/setup
 ```
 
 After the initial setup, you can run bootstrap to upgrade the greymatter-cue API definitions:
-```
+
+```sh
 ./scripts/bootstrap
 ```
 
 ### Fetching the intermediates.cue
+
 In order for the CUE to evaluate, you must combine it with an intermediates.cue file.
 Intermediates holds the rules, mappings, and other advanced CUE constructs that allows
 for an easier configuration experience.
@@ -31,7 +35,8 @@ and is maintained by IT admins, SREs, or similar people.
 
 If you are looking to run produce-aisle as a test, or otherwise do not have an enterprise 
 intermediates, you can choose our gitops-core example default:
-```
+
+```sh
 curl https://raw.githubusercontent.com/greymatter-io/gitops-core/main/gm/intermediates.cue | sed -E 's/package .+/package services/'  >> ./services/intermediates.cue
 ```
 
@@ -44,14 +49,14 @@ package as your service CUE else CUE will not unify it.
 Additionally, you may need to modify or replace the project's input.cue to include data set by enterprise 
 IT admins that their intermediates.cue depends on.
 
-
 ### CUE
+
 We write mesh configurations in [CUE](https://cuelang.org/), a fantastic data validation language. It's quite cutting edge,
 but not hard to learn. We put together a quick crash course you can read in TUTORIAL.md. You can also checkout the official [CUE
 documentation](https://cuelang.org/docs/), [cuetorials](https://cuetorials.com/), and the [CUE playground](https://cuelang.org/play/#cue@export@cue).
 
-
 ## Project Layout
+
 * `cue.mod`: a directory that marks this repo as a cue module. This dir is
   managed by the `cue` CLI.
 * `cue.mod/module.cue`: contains our module name: "produce.local". CUE modules are logical groupings of packages
@@ -74,14 +79,16 @@ package. This includes all defaults defined in `inputs`, all templates in `inter
 and your final service configurations in `services`.
 
 You can check out rendered output by running commands like the following:
-```bash
+
+```sh
 cue eval -c EXPORT.cue --out json -e fruit_configs # just the fruit configurations
 cue eval -c EXPORT.cue --out yaml -e vegetable_configs # just the vegetable configurations
-cue eval -c EXPORT.cue --out json -e mesh_configs # all the configurations
+cue eval -c EXPORT.cue --out json -e configs # all the configurations
 ```
 
 If you want a full output of configs defined in the `EXPORT` file you can run:
-```bash
+
+```sh
 cue eval EXPORT.cue
 ```
 
@@ -89,7 +96,7 @@ cue eval EXPORT.cue
 
 To apply the configurations for the produce aisle services, use the `greymatter sync` comamnd:
 ```
-greymatter sync --report cue -e mesh_configs
+greymatter sync --report cue -e configs
 ```
 
 Or you can launch a sync container with the `greymatter k8s sync` command.
@@ -97,7 +104,8 @@ Or you can launch a sync container with the `greymatter k8s sync` command.
 Make sure to apply the starter k8s manifests in `./manifets/`.
 
 ## Troubleshooting and Gotchas
-* Deployed services not running with a sidecar? 
+
+* Deployed services not running with a sidecar?
   You need to add produce-aisle to the `watched_namespace` array in the operator configs.
 * Make sure your CLI configuration file includes a catalog block with a host string that contains the url prefix to catalog.
   e.g. http://domain.com/services/catalog
