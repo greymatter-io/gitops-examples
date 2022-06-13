@@ -9,7 +9,7 @@
 // business applications, etc...
 
 // example evaluation commands:
-// cue eval -c EXPORT.cue --out json -e mesh_configs
+// cue eval -c EXPORT.cue --out json -e configs
 
 // This package name refers to your target mesh. We are attempting to write configs for the "produce"
 // Grey Matter mesh so we all our top level package "produce". This does not need to match the cue module name.
@@ -33,4 +33,4 @@ fruit_configs: fruits.Banana.config +
 vegetable_configs: vegetables.Lettuce.config +
 	vegetables.Tomato.config
 
-mesh_configs: fruit_configs + vegetable_configs
+configs: fruit_configs + vegetable_configs

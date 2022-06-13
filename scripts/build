@@ -3,7 +3,7 @@ set -e
 
 # default build will export CUE into JSON.
 cmd_default () {
-    cue export EXPORT.cue -e mesh_configs
+    cue export EXPORT.cue -e configs
 }
 
 # fmt will run cue fmt against the entire cue project.
