@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apple
+  namespace: produce-aisle
+  annotations:
+    greymatter.io/inject-sidecar-to: "8080"
+    greymatter.io/configure-sidecar: "true"
+spec:
+  selector:
+    matchLabels:
+      app: apple
+  template:
+    metadata:
+      labels:
+        app: apple
+    spec:
+      containers:
+        - name: apple
+          image: python:3
+          command: ["python"]
+          args: ["-m", "http.server", "8080"]

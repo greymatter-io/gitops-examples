@@ -5,8 +5,7 @@ cmd_default () {
     # update main branch from origin/main
     git fetch origin main:main
     
-    # update, but not pull or initialize, submodules.
-    git submodule update
+    git submodule update --recursive --init
 }
 
 cmd_upstream () {

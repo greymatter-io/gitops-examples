@@ -1,9 +1,9 @@
 #!/bin/bash
 set -e
 
-# default build will evaluate the local cue and make sure it's acceptable.
+# default build will export CUE into JSON.
 cmd_default () {
-    cue eval -c EXPORT.cue -e all_configs
+    cue export EXPORT.cue -e mesh_configs
 }
 
 # fmt will run cue fmt against the entire cue project.
