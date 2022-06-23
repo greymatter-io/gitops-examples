@@ -3,15 +3,15 @@ kind: Deployment
 metadata:
   name: apple
   namespace: produce-aisle
-  annotations:
-    greymatter.io/inject-sidecar-to: "8080"
-    greymatter.io/configure-sidecar: "true"
 spec:
   selector:
     matchLabels:
       app: apple
   template:
     metadata:
+      annotations:
+        greymatter.io/inject-sidecar-to: "8080"
+        greymatter.io/configure-sidecar: "true"
       labels:
         app: apple
     spec:

@@ -4,15 +4,15 @@ kind: Deployment
 metadata:
   name: banana
   namespace: produce-aisle
-  annotations:
-    greymatter.io/inject-sidecar-to: "8080"
-    greymatter.io/configure-sidecar: "true"
 spec:
   selector:
     matchLabels:
       app: banana
   template:
     metadata:
+      annotations:
+        greymatter.io/inject-sidecar-to: "8080"
+        greymatter.io/configure-sidecar: "true"
       labels:
         app: banana
     spec:
