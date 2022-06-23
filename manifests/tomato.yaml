@@ -4,15 +4,15 @@ kind: Deployment
 metadata:
   name: tomato
   namespace: produce-aisle
-  annotations:
-    greymatter.io/inject-sidecar-to: "8080"
-    greymatter.io/configure-sidecar: "true"
 spec:
   selector:
     matchLabels:
       app: tomato
   template:
     metadata:
+      annotations:
+        greymatter.io/inject-sidecar-to: "8080"
+        greymatter.io/configure-sidecar: "true"
       labels:
         app: tomato
     spec:
