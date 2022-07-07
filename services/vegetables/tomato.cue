@@ -7,6 +7,12 @@ import greymatter "greymatter.io/api"
 let Name = "tomato"
 let TomatoIngressName = "\(Name)-ingress-to-tomato"
 
+// Top level service objects enable programmatic access to service 
+// metadata when exported. Tagging can be used throughout the CUE
+// to do things like namespace object keys, provide contextual information
+// about your service such as the name, which mesh it belongs too, etc...
+// Each service object is REQUIRED to have a `config` array that contains
+// all associated mesh configurations as displayed below.
 Tomato: {
 	name:   Name
 	config: tomato_config
