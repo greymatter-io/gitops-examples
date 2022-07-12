@@ -37,7 +37,7 @@ If you are looking to run gitops-examples as a test, or otherwise do not have an
 intermediates, you can choose our gitops-core example default:
 
 ```sh
-curl https://raw.githubusercontent.com/greymatter-io/gitops-core/main/gm/intermediates.cue | sed -E 's/package .+/package services/'  >> ./services/intermediates.cue
+curl https://raw.githubusercontent.com/greymatter-io/gitops-core/main/gm/intermediates.cue | sed -E 's/package .+/package grocerylist/'  >> ./services/intermediates.cue
 ```
 
 If you are basing your own "dev team" repository off gitops-examples, please go fetch it from there
@@ -62,7 +62,7 @@ documentation](https://cuelang.org/docs/), [cuetorials](https://cuetorials.com/)
 * `cue.mod/module.cue`: contains our module name: "produce.local". CUE modules are logical groupings of packages
    and enable certain features like imports.
 * `cue.mod/pkg`: a package that holds all the Grey Matter and Envoy config schemas in CUE.
-* `services/inputs.cue`: a cue file in `package services` that contains defaults, overrides, and user inputted values.
+* `services/inputs.cue`: a cue file in `package grocerylist` that contains defaults, overrides, and user inputted values.
 * `services/fruits`: an example application deployment
 * `services/vegetables`: another example application deployment
 * `services`:a directory of example service configs, and our concrete values. These
