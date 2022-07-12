@@ -1,4 +1,4 @@
-# Grey Matter Produce Aisle
+# Grey Matter Gitops Examples
 
 An example for a dev-team GitOps repository usng CUE :rocket:
 
@@ -33,14 +33,14 @@ for an easier configuration experience.
 According to our recommended GitOps flow, that file lives in an organization's 'core' repo
 and is maintained by IT admins, SREs, or similar people.
 
-If you are looking to run produce-aisle as a test, or otherwise do not have an enterprise 
+If you are looking to run gitops-examples as a test, or otherwise do not have an enterprise 
 intermediates, you can choose our gitops-core example default:
 
 ```sh
 curl https://raw.githubusercontent.com/greymatter-io/gitops-core/main/gm/intermediates.cue | sed -E 's/package .+/package services/'  >> ./services/intermediates.cue
 ```
 
-If you are basing your own "dev team" repository off produce-aisle, please go fetch it from there
+If you are basing your own "dev team" repository off gitops-examples, please go fetch it from there
 and store it at services/intermediates.cue. You **must** ensure the intermediates.cue you download contains the same
 package as your service CUE else CUE will not unify it.  
 
@@ -94,7 +94,7 @@ cue eval EXPORT.cue
 
 ## Applying Configs to a Mesh
 
-To apply the configurations for the produce aisle services, use the `greymatter sync` comamnd:
+To apply the configurations for the gitops examples services, use the `greymatter sync` comamnd:
 ```
 greymatter sync --report cue -e configs
 ```
@@ -106,7 +106,7 @@ Make sure to apply the starter k8s manifests in `./manifets/`.
 ## Troubleshooting and Gotchas
 
 * Deployed services not running with a sidecar?
-  You need to add produce-aisle to the `watched_namespace` array in the operator configs.
+  You need to add gitops-examples to the `watched_namespace` array in the operator configs.
 * Make sure your CLI configuration file includes a catalog block with a host string that contains the url prefix to catalog.
   e.g. http://domain.com/services/catalog
 * Make sure your intermediates.cue's package matches your service cue's package. If they do not, then CUE will not evaulate them together.

@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: lettuce
-  namespace: produce-aisle
+  namespace: examples
 spec:
   selector:
     matchLabels:
