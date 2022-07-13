@@ -27,8 +27,8 @@ edge_config: [
 		port:                        defaults.ports.edge_ingress
 		_gm_observables_topic:       defaults.edge.key
 		_is_ingress:                 true
-		_enable_oidc_authentication: true
-		_enable_rbac:                true
+		_enable_oidc_authentication: false
+		_enable_rbac:                false
 		_oidc_endpoint:              defaults.edge.oidc.endpoint
 		_oidc_service_url:           "https://\(defaults.edge.oidc.domain):\(defaults.ports.edge_ingress)"
 		_oidc_provider:              "\(defaults.edge.oidc.endpoint)/auth/realms/\(defaults.edge.oidc.realm)"
@@ -81,5 +81,5 @@ edge_config: [
 	// #listener & {
 	//  listener_key: EdgeToKeycloakName
 	//  port:         defaults.edge.oidc.endpoint_port
-	// },,,,,,,,
+	// },
 ]

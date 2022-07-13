@@ -28,7 +28,7 @@ defaults: {
 
 	edge: {
 		key:        "edge-example"
-		enable_tls: true
+		enable_tls: false
 		oidc: {
 			endpoint_host: ""
 			endpoint_port: 0
