@@ -1,11 +1,11 @@
-package services
+package examples
 
-import greymatter "greymatter.io/api"
+import (
+	greymatter "greymatter.io/api"
+)
 
-// Grey Matter configuration for the Apple service
-
-let Name = "apple"
-let AppleIngressName = "\(Name)-ingress-to-apple"
+let Name = "lettuce"
+let LettuceIngressName = "\(Name)-ingress-to-lettuce"
 
 // Top level service objects enable programmatic access to service 
 // metadata when exported. Tagging can be used throughout the CUE
@@ -13,37 +13,32 @@ let AppleIngressName = "\(Name)-ingress-to-apple"
 // about your service such as the name, which mesh it belongs too, etc...
 // Each service object is REQUIRED to have a `config` array that contains
 // all associated mesh configurations as displayed below.
-Apple: {
+Lettuce: {
 	name:   Name
-	config: apple_config
+	config: lettuce_config
 }
 
-apple_config: [
-	// Apple -> HTTP ingress
-	#domain & {domain_key: AppleIngressName},
+lettuce_config: [
+	// Lettuce -> HTTP ingress
+	#domain & {domain_key: LettuceIngressName},
 	#listener & {
-		listener_key: AppleIngressName
-		_spire_self:  Name
+		listener_key:          LettuceIngressName
+		_spire_self:           Name
 		_gm_observables_topic: Name
-		_is_ingress: true
-		_enable_rbac: true
+		_is_ingress:           true
 	},
-	// upstream_port -> port your service is listening on,
-	#cluster & {cluster_key: AppleIngressName, _upstream_port: 8080},
-	#route & {route_key:     AppleIngressName},
+	// upstream_port -> port your service is listening on
+	#cluster & {cluster_key: LettuceIngressName, _upstream_port: 8080},
+	#route & {route_key:     LettuceIngressName},
 
-
-
-	// Shared apple proxy object
+	// Shared lettuce proxy object
 	#proxy & {
 		proxy_key: Name
-		domain_keys: [AppleIngressName]
-		listener_keys: [AppleIngressName]
+		domain_keys: [LettuceIngressName]
+		listener_keys: [LettuceIngressName]
 	},
 
-
-
-	// Edge config for the Apple service
+	// Edge config for the lettuce service
 	#cluster & {
 		cluster_key:  Name
 		_spire_other: Name
@@ -52,11 +47,11 @@ apple_config: [
 		domain_key: "edge"
 		route_key:  Name
 		route_match: {
-			path: "/services/apple/"
+			path: "/services/lettuce/"
 		}
 		redirects: [
 			{
-				from:          "^/services/apple$"
+				from:          "^/services/lettuce$"
 				to:            route_match.path
 				redirect_type: "permanent"
 			},
@@ -64,14 +59,12 @@ apple_config: [
 		prefix_rewrite: "/"
 	},
 
-
-
 	greymatter.#CatalogService & {
 		name:                      Name
-		mesh_id:                   defaults.mesh_name
+		mesh_id:                   mesh.metadata.name
 		service_id:                Name
 		version:                   "v1.0.0"
-		description:               "Apple service that serves up apples!"
+		description:               "Lettuce service that serves up lettuce!"
 		api_endpoint:              "/services/\(Name)/"
 		api_spec_endpoint:         "/services/\(Name)/"
 		business_impact:           "low"

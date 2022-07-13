@@ -1,11 +1,11 @@
-package services
+package examples
 
-import greymatter "greymatter.io/api"
+import (
+	greymatter "greymatter.io/api"
+)
 
-// Lettuce
-
-let Name = "lettuce"
-let LettuceIngressName = "\(Name)-ingress-to-lettuce"
+let Name = "banana"
+let BananaIngressName = "\(Name)-ingress-to-banana"
 
 // Top level service objects enable programmatic access to service 
 // metadata when exported. Tagging can be used throughout the CUE
@@ -13,36 +13,31 @@ let LettuceIngressName = "\(Name)-ingress-to-lettuce"
 // about your service such as the name, which mesh it belongs too, etc...
 // Each service object is REQUIRED to have a `config` array that contains
 // all associated mesh configurations as displayed below.
-Lettuce: {
+Banana: {
 	name:   Name
-	config: lettuce_config
+	config: banana_config
 }
 
-lettuce_config: [
-	// Lettuce -> HTTP ingress
-	#domain & {domain_key: LettuceIngressName},
+banana_config: [
+	// Banana -> HTTP ingress
+	#domain & {domain_key: BananaIngressName},
 	#listener & {
-		listener_key: LettuceIngressName
-		_spire_self:  Name
+		listener_key:          BananaIngressName
+		_spire_self:           Name
 		_gm_observables_topic: Name
-		_is_ingress: true
+		_is_ingress:           true
 	},
-	// upstream_port -> port your service is listening on
-	#cluster & {cluster_key: LettuceIngressName, _upstream_port: 8080},
-	#route & {route_key:     LettuceIngressName},
+	#cluster & {cluster_key: BananaIngressName, _upstream_port: 8080},
+	#route & {route_key:     BananaIngressName},
 
-
-
-	// Shared lettuce proxy object
+	// Shared Banana proxy object
 	#proxy & {
 		proxy_key: Name
-		domain_keys: [LettuceIngressName]
-		listener_keys: [LettuceIngressName]
+		domain_keys: [BananaIngressName]
+		listener_keys: [BananaIngressName]
 	},
 
-
-
-	// Edge config for the lettuce service
+	// Edge config for the Banana service
 	#cluster & {
 		cluster_key:  Name
 		_spire_other: Name
@@ -51,11 +46,11 @@ lettuce_config: [
 		domain_key: "edge"
 		route_key:  Name
 		route_match: {
-			path: "/services/lettuce/"
+			path: "/services/banana/"
 		}
 		redirects: [
 			{
-				from:          "^/services/lettuce$"
+				from:          "^/services/banana$"
 				to:            route_match.path
 				redirect_type: "permanent"
 			},
@@ -63,14 +58,13 @@ lettuce_config: [
 		prefix_rewrite: "/"
 	},
 
-	
-
+	// Grey Matter catalog service entry
 	greymatter.#CatalogService & {
 		name:                      Name
-		mesh_id:                   defaults.mesh_name
+		mesh_id:                   mesh.metadata.name
 		service_id:                Name
-		version:                   "v1.0.0"
-		description:               "Lettuce service that serves up lettuce!"
+		version:                   "v0.0.1"
+		description:               "Banana service that serves up bananas!"
 		api_endpoint:              "/services/\(Name)/"
 		api_spec_endpoint:         "/services/\(Name)/"
 		business_impact:           "low"

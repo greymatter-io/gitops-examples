@@ -1,11 +1,11 @@
-package services
+package examples
 
-import greymatter "greymatter.io/api"
+import (
+	greymatter "greymatter.io/api"
+)
 
-// Grey Matter configuration for the Banana service
-
-let Name = "banana"
-let BananaIngressName = "\(Name)-ingress-to-banana"
+let Name = "tomato"
+let TomatoIngressName = "\(Name)-ingress-to-tomato"
 
 // Top level service objects enable programmatic access to service 
 // metadata when exported. Tagging can be used throughout the CUE
@@ -13,35 +13,32 @@ let BananaIngressName = "\(Name)-ingress-to-banana"
 // about your service such as the name, which mesh it belongs too, etc...
 // Each service object is REQUIRED to have a `config` array that contains
 // all associated mesh configurations as displayed below.
-Banana: {
+Tomato: {
 	name:   Name
-	config: banana_config
+	config: tomato_config
 }
 
-banana_config: [
-	// Banana -> HTTP ingress
-	#domain & {domain_key: BananaIngressName},
+tomato_config: [
+	// tomato -> HTTP ingress
+	#domain & {domain_key: TomatoIngressName},
 	#listener & {
-		listener_key: BananaIngressName
-		_spire_self:  Name
+		listener_key:          TomatoIngressName
+		_spire_self:           Name
 		_gm_observables_topic: Name
-		_is_ingress: true
+		_is_ingress:           true
 	},
-	#cluster & {cluster_key: BananaIngressName, _upstream_port: 8080}, // upstream_port -> port your service is listening on
-	#route & {route_key:     BananaIngressName},
+	// upstream_port -> port your service is listening on
+	#cluster & {cluster_key: TomatoIngressName, _upstream_port: 8080},
+	#route & {route_key:     TomatoIngressName},
 
-
-
-	// Shared Banana proxy object
+	// Shared tomato proxy object
 	#proxy & {
 		proxy_key: Name
-		domain_keys: [BananaIngressName]
-		listener_keys: [BananaIngressName]
+		domain_keys: [TomatoIngressName]
+		listener_keys: [TomatoIngressName]
 	},
 
-
-
-	// Edge config for the Banana service
+	// Edge config for the tomato service
 	#cluster & {
 		cluster_key:  Name
 		_spire_other: Name
@@ -50,11 +47,11 @@ banana_config: [
 		domain_key: "edge"
 		route_key:  Name
 		route_match: {
-			path: "/services/banana/"
+			path: "/services/tomato/"
 		}
 		redirects: [
 			{
-				from:          "^/services/banana$"
+				from:          "^/services/tomato$"
 				to:            route_match.path
 				redirect_type: "permanent"
 			},
@@ -62,15 +59,12 @@ banana_config: [
 		prefix_rewrite: "/"
 	},
 
-	
-
-	// Grey Matter catalog service entry
 	greymatter.#CatalogService & {
 		name:                      Name
-		mesh_id:                   defaults.mesh_name
+		mesh_id:                   mesh.metadata.name
 		service_id:                Name
-		version:                   "v0.0.1"
-		description:               "Banana service that serves up bananas!"
+		version:                   "v1.0.0"
+		description:               "Tomato service that serves up tomato!"
 		api_endpoint:              "/services/\(Name)/"
 		api_spec_endpoint:         "/services/\(Name)/"
 		business_impact:           "low"
