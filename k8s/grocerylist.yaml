@@ -16,7 +16,6 @@ spec:
     metadata:
       annotations:
         greymatter.io/inject-sidecar-to: "8080"
-        greymatter.io/configure-sidecar: "true"
       labels:
         app: apple
     spec:
@@ -39,7 +38,6 @@ spec:
     metadata:
       annotations:
         greymatter.io/inject-sidecar-to: "8080"
-        greymatter.io/configure-sidecar: "true"
       labels:
         app: banana
     spec:
@@ -62,7 +60,6 @@ spec:
     metadata:
       annotations:
         greymatter.io/inject-sidecar-to: "8080"
-        greymatter.io/configure-sidecar: "true"
       labels:
         app: lettuce
     spec:
@@ -85,7 +82,6 @@ spec:
     metadata:
       annotations:
         greymatter.io/inject-sidecar-to: "8080"
-        greymatter.io/configure-sidecar: "true"
       labels:
         app: tomato
     spec:
