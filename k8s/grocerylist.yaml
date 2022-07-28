@@ -3,6 +3,14 @@ kind: Namespace
 metadata:
   name: examples
 ---
+apiVersion: v1
+data:
+  index.html: An apple a day keeps the dentist away.
+kind: ConfigMap
+metadata:
+  name: apple-web
+  namespace: examples
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -23,7 +31,22 @@ spec:
         - name: apple
           image: python:3
           command: ["python"]
-          args: ["-m", "http.server", "8080"]
+          args: ["-m", "http.server", "8080", "--directory", "web"]
+          volumeMounts:
+            - name: web-volume
+              mountPath: /web
+      volumes:
+        - name: web-volume
+          configMap:
+            name: apple-web
+---
+apiVersion: v1
+data:
+  index.html: This is totally bananas.
+kind: ConfigMap
+metadata:
+  name: banana-web
+  namespace: examples
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -45,7 +68,22 @@ spec:
         - name: banana
           image: python:3
           command: ["python"]
-          args: ["-m", "http.server", "8080"]
+          args: ["-m", "http.server", "8080", "--directory", "web"]
+          volumeMounts:
+            - name: web-volume
+              mountPath: /web
+      volumes:
+        - name: web-volume
+          configMap:
+            name: banana-web
+---
+apiVersion: v1
+data:
+  index.html: Everybody romaine calm!
+kind: ConfigMap
+metadata:
+  name: lettuce-web
+  namespace: examples
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -67,7 +105,22 @@ spec:
         - name: lettuce
           image: python:3
           command: ["python"]
-          args: ["-m", "http.server", "8080"]
+          args: ["-m", "http.server", "8080", "--directory", "web"]
+          volumeMounts:
+            - name: web-volume
+              mountPath: /web
+      volumes:
+        - name: web-volume
+          configMap:
+            name: lettuce-web
+---
+apiVersion: v1
+data:
+  index.html: You say Tomato, I say Tomato.
+kind: ConfigMap
+metadata:
+  name: tomato-web
+  namespace: examples
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -89,4 +142,11 @@ spec:
         - name: tomato
           image: python:3
           command: ["python"]
-          args: ["-m", "http.server", "8080"]
+          args: ["-m", "http.server", "8080", "--directory", "web"]
+          volumeMounts:
+            - name: web-volume
+              mountPath: /web
+      volumes:
+        - name: web-volume
+          configMap:
+            name: tomato-web
