@@ -24,7 +24,7 @@ import (
 	force_https:  _force_https
 	if _force_https == true {
 		ssl_config: greymatter.#SSLConfig & {
-			protocols: [ "TLSv1.2"]
+			protocols: [ "TLSv1_2"]
 			trust_file: "/etc/proxy/tls/sidecar/ca.crt"
 			cert_key_pairs: [
 				greymatter.#CertKeyPathPair & {

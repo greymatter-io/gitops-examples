@@ -71,7 +71,7 @@ edge_config: [
 	//  _upstream_host: defaults.edge.oidc.endpoint_host
 	//  _upstream_port: defaults.edge.oidc.endpoint_port
 	//  ssl_config: {
-	//   protocols: ["TLSv1.2"]
+	//   protocols: ["TLSv1_2"]
 	//   sni: defaults.edge.oidc.endpoint_host
 	//  }
 	//  require_tls: true
