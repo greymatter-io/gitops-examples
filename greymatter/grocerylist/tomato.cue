@@ -2,6 +2,7 @@ package examples
 
 let Name = "tomato"
 let TomatoIngressName = "\(Name)-ingress-to-tomato"
+let EgressToRedisName = "\(Name)-egress-to-redis"
 
 // Top level service objects enable programmatic access to service 
 // metadata when exported. Tagging can be used throughout the CUE
@@ -10,7 +11,7 @@ let TomatoIngressName = "\(Name)-ingress-to-tomato"
 // Each service object is REQUIRED to have a `config` array that contains
 // all associated mesh configurations as displayed below.
 Tomato: {
-	name:   Name
+	name: Name
 	config: [
 		// tomato -> HTTP ingress
 		#domain & {domain_key: TomatoIngressName},
@@ -24,11 +25,27 @@ Tomato: {
 		#cluster & {cluster_key: TomatoIngressName, _upstream_port: 8080},
 		#route & {route_key:     TomatoIngressName},
 
+		// egress->redis
+		#domain & {domain_key: EgressToRedisName, port: defaults.ports.redis_ingress},
+		#cluster & {
+			cluster_key:  EgressToRedisName
+			name:         defaults.redis_cluster_name
+			_spire_self:  Name
+			_spire_other: defaults.redis_cluster_name
+		},
+		#route & {route_key: EgressToRedisName},
+		#listener & {
+			listener_key:  EgressToRedisName
+			ip:            "127.0.0.1" // egress listeners are local-only
+			port:          defaults.ports.redis_ingress
+			_tcp_upstream: defaults.redis_cluster_name // NB this points at a cluster name, not key
+		},
+
 		// Shared tomato proxy object
 		#proxy & {
 			proxy_key: Name
-			domain_keys: [TomatoIngressName]
-			listener_keys: [TomatoIngressName]
+			domain_keys: [TomatoIngressName, EgressToRedisName]
+			listener_keys: [TomatoIngressName, EgressToRedisName]
 		},
 
 		// Edge config for the tomato service
@@ -52,7 +69,7 @@ Tomato: {
 			prefix_rewrite: "/"
 		},
 
-		#catalogentry& {
+		#catalogentry & {
 			name:                      Name
 			mesh_id:                   mesh.metadata.name
 			service_id:                Name
