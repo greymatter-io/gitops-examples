@@ -1,9 +1,4 @@
 apiVersion: v1
-kind: Namespace
-metadata:
-  name: examples
----
-apiVersion: v1
 data:
   index.html: An apple a day keeps the dentist away.
 kind: ConfigMap
