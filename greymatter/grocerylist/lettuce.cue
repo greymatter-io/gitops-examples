@@ -2,6 +2,7 @@ package examples
 
 let Name = "lettuce"
 let LettuceIngressName = "\(Name)-ingress-to-lettuce"
+let EgressToRedisName = "\(Name)-egress-to-redis"
 
 // Top level service objects enable programmatic access to service 
 // metadata when exported. Tagging can be used throughout the CUE
@@ -10,7 +11,7 @@ let LettuceIngressName = "\(Name)-ingress-to-lettuce"
 // Each service object is REQUIRED to have a `config` array that contains
 // all associated mesh configurations as displayed below.
 Lettuce: {
-	name:   Name
+	name: Name
 	config: [
 		// Lettuce -> HTTP ingress
 		#domain & {domain_key: LettuceIngressName},
@@ -24,11 +25,27 @@ Lettuce: {
 		#cluster & {cluster_key: LettuceIngressName, _upstream_port: 8080},
 		#route & {route_key:     LettuceIngressName},
 
+		// egress->redis
+		#domain & {domain_key: EgressToRedisName, port: defaults.ports.redis_ingress},
+		#cluster & {
+			cluster_key:  EgressToRedisName
+			name:         defaults.redis_cluster_name
+			_spire_self:  Name
+			_spire_other: defaults.redis_cluster_name
+		},
+		#route & {route_key: EgressToRedisName},
+		#listener & {
+			listener_key:  EgressToRedisName
+			ip:            "127.0.0.1" // egress listeners are local-only
+			port:          defaults.ports.redis_ingress
+			_tcp_upstream: defaults.redis_cluster_name // NB this points at a cluster name, not key
+		},
+
 		// Shared lettuce proxy object
 		#proxy & {
 			proxy_key: Name
-			domain_keys: [LettuceIngressName]
-			listener_keys: [LettuceIngressName]
+			domain_keys: [LettuceIngressName, EgressToRedisName]
+			listener_keys: [LettuceIngressName, EgressToRedisName]
 		},
 
 		// Edge config for the lettuce service

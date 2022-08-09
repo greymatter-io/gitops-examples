@@ -2,6 +2,7 @@ package examples
 
 let Name = "banana"
 let BananaIngressName = "\(Name)-ingress-to-banana"
+let EgressToRedisName = "\(Name)-egress-to-redis"
 
 // Top level service objects enable programmatic access to service 
 // metadata when exported. Tagging can be used throughout the CUE
@@ -10,7 +11,7 @@ let BananaIngressName = "\(Name)-ingress-to-banana"
 // Each service object is REQUIRED to have a `config` array that contains
 // all associated mesh configurations as displayed below.
 Banana: {
-	name:   Name
+	name: Name
 	config: [
 		// Banana -> HTTP ingress
 		#domain & {domain_key: BananaIngressName},
@@ -23,11 +24,27 @@ Banana: {
 		#cluster & {cluster_key: BananaIngressName, _upstream_port: 8080},
 		#route & {route_key:     BananaIngressName},
 
+		// egress->redis
+		#domain & {domain_key: EgressToRedisName, port: defaults.ports.redis_ingress},
+		#cluster & {
+			cluster_key:  EgressToRedisName
+			name:         defaults.redis_cluster_name
+			_spire_self:  Name
+			_spire_other: defaults.redis_cluster_name
+		},
+		#route & {route_key: EgressToRedisName},
+		#listener & {
+			listener_key:  EgressToRedisName
+			ip:            "127.0.0.1" // egress listeners are local-only
+			port:          defaults.ports.redis_ingress
+			_tcp_upstream: defaults.redis_cluster_name // NB this points at a cluster name, not key
+		},
+
 		// Shared Banana proxy object
 		#proxy & {
 			proxy_key: Name
-			domain_keys: [BananaIngressName]
-			listener_keys: [BananaIngressName]
+			domain_keys: [BananaIngressName, EgressToRedisName]
+			listener_keys: [BananaIngressName, EgressToRedisName]
 		},
 
 		// Edge config for the Banana service
