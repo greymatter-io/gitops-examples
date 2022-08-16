@@ -1,4 +1,4 @@
-# Grey Matter Gitops Examples
+# greymatter.io Gitops Examples
 
 An example for a dev-team GitOps repository usng CUE :rocket:
 
@@ -39,10 +39,10 @@ and the [CUE playground](https://cuelang.org/play/#cue@export@cue).
   managed by the `cue` CLI.
 * `cue.mod/module.cue`: Contains our module name: "examples.local". CUE modules
   are logical groupings of packages and enable certain features like imports.
-* `cue.mod/pkg`: A package that holds all Grey Matter and Envoy config
+* `cue.mod/pkg`: A package that holds all greymatter.io and Envoy config
   CUE schemas.
 * `greymatter`: A directory of example CUE configs. These configs are all known
-  to work with Grey Matter `v1.7.0+`.
+  to work with greymatter.io `v1.7.0+`.
 * `./greymatter/inputs.cue`: A CUE file in `package examples` that contains
   defaults, overrides, and user generated values.
 * `./greymatter/intermediates.cue`: A CUE file in `package examples` containing
