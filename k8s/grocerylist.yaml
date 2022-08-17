@@ -30,6 +30,13 @@ spec:
           volumeMounts:
             - name: web-volume
               mountPath: /web
+          resources:
+            limits:
+              cpu: 200m
+              memory: 512Mi
+            requests:
+              cpu: 50m
+              memory: 128Mi
       volumes:
         - name: web-volume
           configMap:
@@ -67,6 +74,13 @@ spec:
           volumeMounts:
             - name: web-volume
               mountPath: /web
+          resources:
+            limits:
+              cpu: 200m
+              memory: 512Mi
+            requests:
+              cpu: 50m
+              memory: 128Mi
       volumes:
         - name: web-volume
           configMap:
@@ -104,6 +118,13 @@ spec:
           volumeMounts:
             - name: web-volume
               mountPath: /web
+          resources:
+            limits:
+              cpu: 200m
+              memory: 512Mi
+            requests:
+              cpu: 50m
+              memory: 128Mi
       volumes:
         - name: web-volume
           configMap:
@@ -141,6 +162,13 @@ spec:
           volumeMounts:
             - name: web-volume
               mountPath: /web
+          resources:
+            limits:
+              cpu: 200m
+              memory: 512Mi
+            requests:
+              cpu: 50m
+              memory: 128Mi
       volumes:
         - name: web-volume
           configMap:
