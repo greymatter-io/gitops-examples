@@ -100,7 +100,7 @@ import (
 				"gm.inheaders"
 			},
 			if _enable_impersonation {
-				"gm.acl"
+				"gm.impersonation"
 			},
 			if _enable_oidc_authentication {
 				"gm.oidc-authentication"
