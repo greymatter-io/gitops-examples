@@ -1,35 +1,36 @@
-package greymatter
+package grocerylist
 
 config: {
 	// enable Spire-based mTLS
 	spire: bool | *false @tag(spire,type=bool)
-}
 
-mesh: {
-	metadata: {
-		name: string | *"greymatter-mesh"
-	}
-	spec: {
-		zone: string | *"default-zone"
-		images: {
-			proxy: string | *"quay.io/greymatterio/gm-proxy:1.7.0"
+	mesh: {
+		metadata: {
+			name: string | *"greymatter-mesh"
+		}
+		spec: {
+			zone: string | *"default-zone"
+			images: {
+				proxy: string | *"quay.io/greymatterio/gm-proxy:1.7.1"
+			}
 		}
 	}
-}
 
-defaults: {
-	redis_cluster_name: "redis"
-
-	ports: {
+	global_ports: {
 		default_ingress: 10808
-		edge_ingress:    10809
-		redis_ingress:   10910
 		metrics:         8081
 	}
 
+	redis: {
+		key:          "redis"
+		ingress_port: 10910
+	}
+
+	// greymatter.io core edge input configurations
 	edge: {
-		key:        "edge-example"
-		enable_tls: false
+		key:          "edge-grocerylist"
+		ingress_port: 10809
+		enable_tls:   false
 		oidc: {
 			endpoint_host: ""
 			endpoint_port: 0
