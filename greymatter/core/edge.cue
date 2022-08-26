@@ -4,7 +4,7 @@
 // greymatter.io edge that is deployed via enterprise-level configuration in
 // the gitops-core git repository.
 
-package examples
+package greymatter
 
 let EgressToRedisName = "\(defaults.edge.key)_egress_to_redis"
 
@@ -41,7 +41,7 @@ edge_config: [
 	// so that Catalog will be able to look-up edge instances
 	#cluster & {cluster_key: defaults.edge.key},
 
-	// egress->redis
+	// egress -> redis
 	#domain & {domain_key: EgressToRedisName, port: defaults.ports.redis_ingress},
 	#cluster & {
 		cluster_key:  EgressToRedisName
@@ -52,7 +52,7 @@ edge_config: [
 	#route & {route_key: EgressToRedisName},
 	#listener & {
 		listener_key:  EgressToRedisName
-		ip:            "127.0.0.1" // egress listeners are local-only
+		ip:            "127.0.0.1"
 		port:          defaults.ports.redis_ingress
 		_tcp_upstream: defaults.redis_cluster_name
 	},
@@ -63,7 +63,7 @@ edge_config: [
 		listener_keys: [defaults.edge.key, EgressToRedisName]
 	}
 
-	// egress->Keycloak for OIDC/JWT Authentication (only necessary with remote JWKS provider)
+	// egress -> Keycloak for OIDC/JWT Authentication (only necessary with remote JWKS provider)
 	// NB: You need to add the EdgeToKeycloakName key to the domain_keys and listener_keys 
 	// in the #proxy above for the cluster to be discoverable by the sidecar
 	// #cluster & {
@@ -71,7 +71,7 @@ edge_config: [
 	//  _upstream_host: defaults.edge.oidc.endpoint_host
 	//  _upstream_port: defaults.edge.oidc.endpoint_port
 	//  ssl_config: {
-	//   protocols: ["TLSv1_2"]
+	//   protocols: ["TLS_AUTO"]
 	//   sni: defaults.edge.oidc.endpoint_host
 	//  }
 	//  require_tls: true
@@ -81,5 +81,5 @@ edge_config: [
 	// #listener & {
 	//  listener_key: EdgeToKeycloakName
 	//  port:         defaults.edge.oidc.endpoint_port
-	// },
+	// },,
 ]

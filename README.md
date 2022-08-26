@@ -43,9 +43,9 @@ and the [CUE playground](https://cuelang.org/play/#cue@export@cue).
   CUE schemas.
 * `greymatter`: A directory of example CUE configs. These configs are all known
   to work with greymatter.io `v1.7.0+`.
-* `./greymatter/inputs.cue`: A CUE file in `package examples` that contains
+* `./greymatter/inputs.cue`: A CUE file in `package greymatter` that contains
   defaults, overrides, and user generated values.
-* `./greymatter/intermediates.cue`: A CUE file in `package examples` containing
+* `./greymatter/intermediates.cue`: A CUE file in `package greymatter` containing
   default greymatter.io configurations. Many default HTTP filter configs can be
   found in this file.
 * `EXPORT.cue`: A file storing the final CUE keys to export. The fields must be

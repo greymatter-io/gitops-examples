@@ -1,7 +1,8 @@
-package examples
+package greymatter
 
 config: {
-	spire: bool | *false @tag(spire,type=bool) // enable Spire-based mTLS
+	// enable Spire-based mTLS
+	spire: bool | *false @tag(spire,type=bool)
 }
 
 mesh: {

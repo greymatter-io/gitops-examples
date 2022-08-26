@@ -1,1 +1,1 @@
-module: "examples.local"
+module: "greymatter.io.examples"
