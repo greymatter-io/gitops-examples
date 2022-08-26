@@ -1,4 +1,4 @@
-package examples
+package greymatter
 
 let Name = "lettuce"
 let LettuceIngressName = "\(Name)-ingress-to-lettuce"
@@ -25,7 +25,7 @@ Lettuce: {
 		#cluster & {cluster_key: LettuceIngressName, _upstream_port: 8080},
 		#route & {route_key:     LettuceIngressName},
 
-		// egress->redis
+		// egress -> redis
 		#domain & {domain_key: EgressToRedisName, port: defaults.ports.redis_ingress},
 		#cluster & {
 			cluster_key:  EgressToRedisName
@@ -35,20 +35,22 @@ Lettuce: {
 		},
 		#route & {route_key: EgressToRedisName},
 		#listener & {
-			listener_key:  EgressToRedisName
-			ip:            "127.0.0.1" // egress listeners are local-only
-			port:          defaults.ports.redis_ingress
-			_tcp_upstream: defaults.redis_cluster_name // NB this points at a cluster name, not key
+			listener_key: EgressToRedisName
+			// egress listeners are local-only
+			ip:   "127.0.0.1"
+			port: defaults.ports.redis_ingress
+			// NB this points at a cluster name, not key
+			_tcp_upstream: defaults.redis_cluster_name
 		},
 
-		// Shared lettuce proxy object
+		// Shared Lettuce proxy object
 		#proxy & {
 			proxy_key: Name
 			domain_keys: [LettuceIngressName, EgressToRedisName]
 			listener_keys: [LettuceIngressName, EgressToRedisName]
 		},
 
-		// Edge config for the lettuce service
+		// Edge config for the Lettuce service
 		#cluster & {
 			cluster_key:  Name
 			_spire_other: Name
@@ -69,12 +71,12 @@ Lettuce: {
 			prefix_rewrite: "/"
 		},
 
-		#catalogentry & {
+		#catalog_entry & {
 			name:                      Name
 			mesh_id:                   mesh.metadata.name
 			service_id:                Name
 			version:                   "v1.0.0"
-			description:               "Lettuce service that serves up lettuce!"
+			description:               "Lettuce service that serves up lettuce"
 			api_endpoint:              "/services/\(Name)/"
 			api_spec_endpoint:         "/services/\(Name)/"
 			business_impact:           "low"

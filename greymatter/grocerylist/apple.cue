@@ -1,4 +1,4 @@
-package examples
+package greymatter
 
 let Name = "apple"
 let AppleIngressName = "\(Name)-ingress-to-apple"
@@ -26,7 +26,7 @@ Apple: {
 		#cluster & {cluster_key: AppleIngressName, _upstream_port: 8080},
 		#route & {route_key:     AppleIngressName},
 
-		// egress->redis
+		// egress -> redis
 		#domain & {domain_key: EgressToRedisName, port: defaults.ports.redis_ingress},
 		#cluster & {
 			cluster_key:  EgressToRedisName
@@ -36,13 +36,15 @@ Apple: {
 		},
 		#route & {route_key: EgressToRedisName},
 		#listener & {
-			listener_key:  EgressToRedisName
-			ip:            "127.0.0.1" // egress listeners are local-only
-			port:          defaults.ports.redis_ingress
-			_tcp_upstream: defaults.redis_cluster_name // NB this points at a cluster name, not key
+			listener_key: EgressToRedisName
+			// egress listeners are local-only
+			ip:   "127.0.0.1"
+			port: defaults.ports.redis_ingress
+			// NB this points at a cluster name, not key
+			_tcp_upstream: defaults.redis_cluster_name
 		},
 
-		// Shared apple proxy object
+		// Shared Apple proxy object
 		#proxy & {
 			proxy_key: Name
 			domain_keys: [AppleIngressName, EgressToRedisName]
@@ -70,12 +72,12 @@ Apple: {
 			prefix_rewrite: "/"
 		},
 
-		#catalogentry & {
+		#catalog_entry & {
 			name:                      Name
 			mesh_id:                   mesh.metadata.name
 			service_id:                Name
 			version:                   "v1.0.0"
-			description:               "Apple service that serves up apples!"
+			description:               "Apple service that serves up apples"
 			api_endpoint:              "/services/\(Name)/"
 			api_spec_endpoint:         "/services/\(Name)/"
 			business_impact:           "low"

@@ -21,8 +21,8 @@ package grocerylist
 import (
 	// Point to the services folder in the mesh package since that's where we actually 
 	// define our mesh configs for individual applications.
-	core "examples.local/greymatter/core:examples"
-	grocerylist "examples.local/greymatter/grocerylist:examples"
+	core "greymatter.io.examples/greymatter/core:greymatter"
+	grocerylist "greymatter.io.examples/greymatter/grocerylist:greymatter"
 )
 
 grocerylist_config:
