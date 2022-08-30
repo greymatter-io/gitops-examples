@@ -1,7 +1,7 @@
 package greymatter
 
 let Name = "lettuce"
-let LettuceIngressName = "\(Name)-ingress-to-lettuce"
+let IngressName = "\(Name)-ingress-to-\(Name)"
 let EgressToRedisName = "\(Name)-egress-to-redis"
 
 // Top level service objects enable programmatic access to service 
@@ -13,44 +13,38 @@ let EgressToRedisName = "\(Name)-egress-to-redis"
 Lettuce: {
 	name: Name
 	config: [
-		// Lettuce -> HTTP ingress
-		#domain & {domain_key: LettuceIngressName},
+		// Lettuce -> HTTP ingress to your container
+		#domain & {domain_key: IngressName},
 		#listener & {
-			listener_key:          LettuceIngressName
+			listener_key:          IngressName
 			_spire_self:           Name
 			_gm_observables_topic: Name
 			_is_ingress:           true
+			_enable_rbac:          true
 		},
-		// upstream_port -> port your service is listening on
-		#cluster & {cluster_key: LettuceIngressName, _upstream_port: 8080},
-		#route & {route_key:     LettuceIngressName},
+		// upstream_port -> port your service is listening on,
+		#cluster & {cluster_key: IngressName, _upstream_port: 8080},
+		#route & {route_key:     IngressName},
 
-		// egress -> redis
-		#domain & {domain_key: EgressToRedisName, port: defaults.ports.redis_ingress},
+		// Lettuce TCP egress -> redis for greymatter.io health checking
+		#domain & {domain_key: EgressToRedisName, port: mesh.redis.ingress_port},
 		#cluster & {
 			cluster_key:  EgressToRedisName
-			name:         defaults.redis_cluster_name
+			name:         mesh.redis.key
 			_spire_self:  Name
-			_spire_other: defaults.redis_cluster_name
+			_spire_other: mesh.redis.key
 		},
 		#route & {route_key: EgressToRedisName},
 		#listener & {
-			listener_key: EgressToRedisName
-			// egress listeners are local-only
-			ip:   "127.0.0.1"
-			port: defaults.ports.redis_ingress
-			// NB this points at a cluster name, not key
-			_tcp_upstream: defaults.redis_cluster_name
+			listener_key:  EgressToRedisName
+			ip:            "127.0.0.1" // egress listeners are local-only
+			port:          mesh.redis.ingress_port
+			_tcp_upstream: mesh.redis.key // NB this points at a cluster name, not key
 		},
 
-		// Shared Lettuce proxy object
-		#proxy & {
-			proxy_key: Name
-			domain_keys: [LettuceIngressName, EgressToRedisName]
-			listener_keys: [LettuceIngressName, EgressToRedisName]
-		},
-
-		// Edge config for the Lettuce service
+		// Edge config for the Lettuce service.
+		// These configs are REQUIRED for your service to be accessible
+		// outside your cluster/mesh.
 		#cluster & {
 			cluster_key:  Name
 			_spire_other: Name
@@ -59,11 +53,11 @@ Lettuce: {
 			domain_key: "edge"
 			route_key:  Name
 			route_match: {
-				path: "/services/lettuce/"
+				path: "/services/grocerylist/lettuce/"
 			}
 			redirects: [
 				{
-					from:          "^/services/lettuce$"
+					from:          "^/services/grocerylist/lettuce$"
 					to:            route_match.path
 					redirect_type: "permanent"
 				},
@@ -71,17 +65,29 @@ Lettuce: {
 			prefix_rewrite: "/"
 		},
 
+		// Grey Matter catalog service definition for lettuce
 		#catalog_entry & {
 			name:                      Name
-			mesh_id:                   mesh.metadata.name
+			mesh_id:                   mesh.name
 			service_id:                Name
 			version:                   "v1.0.0"
-			description:               "Lettuce service that serves up lettuce"
-			api_endpoint:              "/services/\(Name)/"
-			api_spec_endpoint:         "/services/\(Name)/"
+			description:               "EDIT ME: service description goes here"
+			api_endpoint:              "/services/grocerylist/\(Name)/"
+			api_spec_endpoint:         "/services/grocerylist/\(Name)/"
 			business_impact:           "low"
 			enable_instance_metrics:   true
 			enable_historical_metrics: false
+		},
+
+		// Shared lettuce proxy object. All configs
+		// become associated with this object with the exception
+		// of the catalog definition. Proxy objects are REQUIRED
+		// to register your service in a Grey Matter mesh and MUST
+		// be created after all other objects.
+		#proxy & {
+			proxy_key: Name
+			domain_keys: [IngressName, EgressToRedisName]
+			listener_keys: [IngressName, EgressToRedisName]
 		},
 	]
 }

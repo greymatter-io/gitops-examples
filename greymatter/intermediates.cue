@@ -28,9 +28,9 @@ import (
 	domain_key: string
 	name:       string | *"*"
 	// Port to access the service on
-	port: int | *defaults.ports.default_ingress
+	port: int | *sidecars.ingress_port
 	// Designates which zone the object belongs to
-	zone_key: mesh.spec.zone
+	zone_key: mesh.zone
 	// Configures TLS settings for incoming requests, utilizing 
 	// mounted certificates to allow for HTTPS traffic
 	force_https: _force_https
@@ -113,7 +113,7 @@ import (
 	name:         listener_key
 	// IP and port that the listener should process requests for
 	ip:   string | *"0.0.0.0"
-	port: int | *defaults.ports.default_ingress
+	port: int | *sidecars.ingress_port
 	// List of domains for this listener to be attached to.
 	// Change this in your service if you have more than one
 	// domain, or if you use a different string for your domain
@@ -223,7 +223,7 @@ import (
 			// work for most use cases. 
 			gm_metrics: {
 				metrics_host:                               "0.0.0.0"
-				metrics_port:                               defaults.ports.metrics
+				metrics_port:                               8081
 				metrics_dashboard_uri_path:                 "/metrics"
 				metrics_prometheus_uri_path:                "/prometheus"
 				metrics_ring_buffer_size:                   4096
@@ -231,7 +231,7 @@ import (
 				metrics_key_function:                       "depth"
 				metrics_key_depth:                          string | *"1"
 				metrics_receiver: {
-					redis_connection_string: string | *"redis://127.0.0.1:\(defaults.ports.redis_ingress)"
+					redis_connection_string: string | *"redis://127.0.0.1:\(mesh.redis.ingress_port)"
 					push_interval_seconds:   10
 				}
 			}
@@ -303,7 +303,7 @@ import (
 						"""
 				}
 				"envoy_jwt_authn": #envoy_jwt_authn & {
-					providers: defaults.edge.oidc.jwt_authn_provider
+					providers: edge.oidc.jwt_authn_provider
 				}
 			}
 			if _enable_rbac {
@@ -327,7 +327,7 @@ import (
 		}
 	}
 
-	if config.spire && _spire_self != _|_ {
+	if mesh.enable_spire && _spire_self != _|_ {
 		secret: #spire_secret & {
 			// Expects _name and _subject to be passed in like so from above:
 			// _spire_self: "dashboard"
@@ -339,7 +339,7 @@ import (
 		}
 	}
 
-	zone_key: mesh.spec.zone
+	zone_key: mesh.zone
 	protocol: "http_auto"
 }
 
@@ -363,7 +363,7 @@ import (
 	if _upstream_port != _|_ {
 		instances: [{host: _upstream_host, port: _upstream_port}]
 	}
-	if config.spire && _spire_other != _|_ {
+	if mesh.enable_spire && _spire_other != _|_ {
 		require_tls: true
 		secret:      #spire_secret & {
 			// Expects _name and _subject to be passed in like so from above:
@@ -373,7 +373,7 @@ import (
 			_subject: _spire_other
 		}
 	}
-	zone_key: mesh.spec.zone
+	zone_key: mesh.zone
 
 	if _enable_circuit_breakers {
 		// circuit_breakers can specify circuit breaker levels for normal and high
@@ -431,7 +431,7 @@ import (
 			weight:      1
 		}]
 	}]
-	zone_key:       mesh.spec.zone
+	zone_key:       mesh.zone
 	prefix_rewrite: string | *"/"
 	filter_configs: {
 		if _enable_route_ext_authz {
@@ -447,24 +447,24 @@ import (
 	name:          proxy_key
 	domain_keys:   [...string] | *[proxy_key]
 	listener_keys: [...string] | *[proxy_key]
-	zone_key:      mesh.spec.zone
+	zone_key:      mesh.zone
 }
 
 #spire_secret: {
-	_name:    string | *defaults.edge.key
-	_subject: string | *defaults.edge.key
+	_name:    string | *edge.key
+	_subject: string | *edge.key
 	_subjects?: [...string]
 
 	set_current_client_cert_details?: {...}
 	forward_client_cert_details?: string
 
 	secret_validation_name: "spiffe://greymatter.io"
-	secret_name:            "spiffe://greymatter.io/\(mesh.metadata.name).\(_name)"
+	secret_name:            "spiffe://greymatter.io/\(mesh.name).\(_name)"
 	if _subjects == _|_ {
-		subject_names: ["spiffe://greymatter.io/\(mesh.metadata.name).\(_subject)"]
+		subject_names: ["spiffe://greymatter.io/\(mesh.name).\(_subject)"]
 	}
 	if _subjects != _|_ {
-		subject_names: [ for s in _subjects {"spiffe://greymatter.io/\(mesh.metadata.name).\(s)"}]
+		subject_names: [ for s in _subjects {"spiffe://greymatter.io/\(mesh.name).\(s)"}]
 	}
 	ecdh_curves: ["X25519:P-256:P-521:P-384"]
 }
@@ -619,8 +619,8 @@ import (
 // See https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/other_features/global_rate_limiting#arch-overview-global-rate-limit
 // for a discussion of ratelimiting and special descriptors to use.
 #default_rate_limit: ratelimit.#RateLimit & {
-	stat_prefix:       defaults.edge.key
-	domain:            defaults.edge.key
+	stat_prefix:       edge.key
+	domain:            edge.key
 	failure_mode_deny: true
 	descriptors: [
 		{
