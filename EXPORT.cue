@@ -23,6 +23,7 @@ import (
 	// define our mesh configs for individual applications.
 	core "greymatter.io.examples/greymatter/core:greymatter"
 	grocerylist "greymatter.io.examples/greymatter/grocerylist:greymatter"
+	grocerylist2 "greymatter.io.examples/greymatter/grocerylist2:greymatter"
 )
 
 grocerylist_config:
@@ -31,7 +32,13 @@ grocerylist_config:
 	grocerylist.Lettuce.config +
 	grocerylist.Tomato.config
 
+grocerylist2_config:
+	grocerylist2.Banana.config +
+	grocerylist2.Apple.config +
+	grocerylist2.Lettuce.config +
+	grocerylist2.Tomato.config
+
 configs:
 	// The edge config must come first because services create routes
 	// that reference the edge domain.
-	core.Edge.config + grocerylist_config
+	core.Edge.config + grocerylist_config + grocerylist2_config
