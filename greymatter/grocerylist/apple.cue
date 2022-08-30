@@ -60,11 +60,11 @@ Apple: {
 			domain_key: "edge"
 			route_key:  Name
 			route_match: {
-				path: "/services/apple/"
+				path: "/services/\(Name)/"
 			}
 			redirects: [
 				{
-					from:          "^/services/apple$"
+					from:          "^/services/\(Name)$"
 					to:            route_match.path
 					redirect_type: "permanent"
 				},

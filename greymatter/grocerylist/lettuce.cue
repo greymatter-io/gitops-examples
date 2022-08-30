@@ -59,11 +59,11 @@ Lettuce: {
 			domain_key: "edge"
 			route_key:  Name
 			route_match: {
-				path: "/services/lettuce/"
+				path: "/services/\(Name)/"
 			}
 			redirects: [
 				{
-					from:          "^/services/lettuce$"
+					from:          "^/services/\(Name)$"
 					to:            route_match.path
 					redirect_type: "permanent"
 				},
