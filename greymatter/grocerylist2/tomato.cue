@@ -1,6 +1,6 @@
 package greymatter
 
-let Name = "examples-tomato2"
+let Name = "plus-tomato2"
 let TomatoIngressName = "\(Name)-ingress-to-tomato"
 let EgressToRedisName = "\(Name)-egress-to-redis"
 
