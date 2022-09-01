@@ -30,7 +30,8 @@ grocerylist_config:
 	grocerylist.Banana.config +
 	grocerylist.Apple.config +
 	grocerylist.Lettuce.config +
-	grocerylist.Tomato.config
+	grocerylist.Tomato.config +
+	grocerylist2.AppEdge.config
 
 grocerylist2_config:
 	grocerylist2.Banana.config +
