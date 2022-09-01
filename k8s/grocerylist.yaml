@@ -173,3 +173,61 @@ spec:
         - name: web-volume
           configMap:
             name: tomato-web
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grocerylist-edge
+  namespace: examples
+spec:
+  selector:
+    matchLabels:
+      app: grocerylist-edge
+  template:
+    metadata:
+      labels:
+        app: grocerylist-edge
+    spec:
+      containers:
+      - env:
+        - name: XDS_CLUSTER
+          value: grocerylist-edge
+        - name: ENVOY_ADMIN_LOG_PATH
+          value: /dev/stdout
+        - name: PROXY_DYNAMIC
+          value: "true"
+        - name: XDS_ZONE
+          value: default-zone
+        - name: XDS_HOST
+          value: controlensemble.greymatter.svc.cluster.local
+        - name: XDS_PORT
+          value: "50000"
+        image: quay.io/greymatterio/gm-proxy:1.7.0
+        imagePullPolicy: Always
+        name: sidecar
+        ports:
+        - containerPort: 10808
+          name: proxy
+          protocol: TCP
+        - containerPort: 8081
+          name: metrics
+          protocol: TCP
+        resources: {}
+      imagePullSecrets:
+      - name: gm-docker-secret
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grocerylist-edge
+  namespace: examples
+spec:
+  ports:
+  - name: ingress
+    port: 10808
+    protocol: TCP
+    targetPort: 10808
+  selector:
+    greymatter.io/cluster: grocerylist-edge
+  type: LoadBalancer
