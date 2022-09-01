@@ -68,7 +68,7 @@ AppEdge: {
 			prefix_rewrite: "/"
 		},
 
-        // routes to application stack
+        // routes apple
         #route & {
 			domain_key: AppEdgeIngressName
 			route_key:  "\(Name)-to-apple"
@@ -90,6 +90,70 @@ AppEdge: {
                 }]
             }]
 		},
+        #route & {
+			domain_key: AppEdgeIngressName
+			route_key:  "\(Name)-to-banana"
+			route_match: {
+				path: "/banana/"
+			}
+			redirects: [
+				{
+					from:          "^/banana$"
+					to:            route_match.path
+					redirect_type: "permanent"
+				},
+			]
+			prefix_rewrite: "/"
+            rules: [{
+                constraints: light: [{
+                    cluster_key: "plus-banana"
+                    weight: 1
+                }]
+            }]
+		},
+        #route & {
+			domain_key: AppEdgeIngressName
+			route_key:  "\(Name)-to-lettuce"
+			route_match: {
+				path: "/lettuce/"
+			}
+			redirects: [
+				{
+					from:          "^/lettuce$"
+					to:            route_match.path
+					redirect_type: "permanent"
+				},
+			]
+			prefix_rewrite: "/"
+            rules: [{
+                constraints: light: [{
+                    cluster_key: "plus-lettuce"
+                    weight: 1
+                }]
+            }]
+		},
+        #route & {
+			domain_key: AppEdgeIngressName
+			route_key:  "\(Name)-to-tomato"
+			route_match: {
+				path: "/tomato/"
+			}
+			redirects: [
+				{
+					from:          "^/tomato$"
+					to:            route_match.path
+					redirect_type: "permanent"
+				},
+			]
+			prefix_rewrite: "/"
+            rules: [{
+                constraints: light: [{
+                    cluster_key: "plus-tomato"
+                    weight: 1
+                }]
+            }]
+		},
+
 
 		#catalog_entry & {
 			name:                      Name
