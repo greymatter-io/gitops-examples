@@ -20,7 +20,7 @@ AppEdge: {
 		},
 		// upstream_port -> port your service is listening on,
 		#cluster & {cluster_key: AppEdgeIngressName, _upstream_port: 8080},
-		#route & {route_key:     AppEdgeIngressName},
+		// #route & {route_key:     AppEdgeIngressName},
 
 		// egress -> redis
 		#domain & {domain_key: EgressToRedisName, port: defaults.ports.redis_ingress},
