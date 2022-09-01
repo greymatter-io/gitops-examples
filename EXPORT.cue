@@ -36,7 +36,8 @@ grocerylist2_config:
 	grocerylist2.Banana.config +
 	grocerylist2.Apple.config +
 	grocerylist2.Lettuce.config +
-	grocerylist2.Tomato.config
+	grocerylist2.Tomato.config +
+	grocerylist2.AppEdge.config
 
 configs:
 	// The edge config must come first because services create routes
