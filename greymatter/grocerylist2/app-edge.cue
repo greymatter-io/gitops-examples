@@ -18,9 +18,6 @@ AppEdge: {
 			_is_ingress:           true
 			_enable_rbac:          true
 		},
-		// NOTE: Compared to the sidecar + service cue files we have
-        // REMOVED THE DEFAULT local route and the cluster (local)
-        // This is because the application edge does no front a services, it proxies out to other proxies
 
 		// egress -> redis
 		#domain & {domain_key: EgressToRedisName, port: defaults.ports.redis_ingress},
@@ -158,7 +155,6 @@ AppEdge: {
 
         // If you want see the application's edge node in the dashboard
         // then you need to specify a cluster object and route object on the gm core edge domain and a catalog entry
-
         // Edge config for the AppEdge service
 		#cluster & {
 			cluster_key:  Name
