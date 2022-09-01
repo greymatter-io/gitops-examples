@@ -167,10 +167,10 @@ AppEdge: {
 			prefix_rewrite: "/"
             rules: [{
                 constraints: light: [
-                    { cluster_key: "plus-apple", weight: 25 },
-                    { cluster_key: "plus-banana", weight: 25 },
-                    { cluster_key: "plus-lettuce", weight: 25 },
-                    { cluster_key: "plus-tomato", weight: 25 }
+                    { cluster_key: "plus-apple", weight: 3 },
+                    { cluster_key: "plus-banana", weight: 1 },
+                    { cluster_key: "plus-lettuce", weight: 1 },
+                    { cluster_key: "plus-tomato", weight: 1 }
                 ]
             }]
 		},

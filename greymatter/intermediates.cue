@@ -428,7 +428,7 @@ import (
 	rules: [{
 		constraints: light: [{
 			cluster_key: _upstream_cluster_key
-			weight:      int | *100 
+			weight:      int | *1
 		}, ...]
 	}]
 	zone_key:       mesh.spec.zone
