@@ -90,6 +90,7 @@ AppEdge: {
                 }]
             }]
 		},
+        // route to banana
         #route & {
 			domain_key: AppEdgeIngressName
 			route_key:  "\(Name)-to-banana"
@@ -111,6 +112,7 @@ AppEdge: {
                 }]
             }]
 		},
+        // route to lettuce
         #route & {
 			domain_key: AppEdgeIngressName
 			route_key:  "\(Name)-to-lettuce"
@@ -132,6 +134,7 @@ AppEdge: {
                 }]
             }]
 		},
+        // route to tomato
         #route & {
 			domain_key: AppEdgeIngressName
 			route_key:  "\(Name)-to-tomato"
@@ -149,6 +152,21 @@ AppEdge: {
             rules: [{
                 constraints: light: [{
                     cluster_key: "plus-tomato"
+                    weight: 1
+                }]
+            }]
+		},
+        // default route
+        #route & {
+			domain_key: AppEdgeIngressName
+			route_key:  "\(Name)-to-default"
+			route_match: {
+				path: "/"
+			}
+			prefix_rewrite: "/"
+            rules: [{
+                constraints: light: [{
+                    cluster_key: "plus-apple"
                     weight: 1
                 }]
             }]
