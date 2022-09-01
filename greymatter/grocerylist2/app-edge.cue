@@ -18,10 +18,9 @@ AppEdge: {
 			_is_ingress:           true
 			_enable_rbac:          true
 		},
-		// <REMOVE THIS DEFAULT ROUTE and the local cluster>
-        // upstream_port -> port your service is listening on,
-        // #cluster & {cluster_key: AppEdgeIngressName, _upstream_port: 8080},
-        // #route & {route_key:     AppEdgeIngressName},
+		// NOTE: Compared to the sidecar + service cue files we have
+        // REMOVED THE DEFAULT local route and the cluster (local)
+        // This is because the application edge does no front a services, it proxies out to other proxies
 
 		// egress -> redis
 		#domain & {domain_key: EgressToRedisName, port: defaults.ports.redis_ingress},
@@ -49,10 +48,31 @@ AppEdge: {
 		},
 
 		// Edge config for the AppEdge service
-		#cluster & {
-			cluster_key:  Name
-			_spire_other: Name
+		// #cluster & {
+		// 	cluster_key:  Name
+		// 	_spire_other: Name
+		// },
+
+        // For application edge's we create a default route (in this case we chose apple).
+        //This will typically be to the ui component of an app stack
+        #route & {
+			domain_key: AppEdgeIngressName
+			route_key:  "\(Name)-to-default"
+			route_match: {
+				path: "/"
+			}
+			prefix_rewrite: "/"
+            // demo of traffic splitting
+            rules: [{
+                constraints: light: [
+                    { cluster_key: "plus-apple", weight: 3 },
+                    { cluster_key: "plus-banana", weight: 1 },
+                    { cluster_key: "plus-lettuce", weight: 1 },
+                    { cluster_key: "plus-tomato", weight: 1 }
+                ]
+            }]
 		},
+
 		#route & {
 			domain_key: "edge"
 			route_key:  Name
@@ -155,23 +175,6 @@ AppEdge: {
                     cluster_key: "plus-tomato"
                     weight: 1
                 }]
-            }]
-		},
-        // default route (in this case we chose apple)
-        #route & {
-			domain_key: AppEdgeIngressName
-			route_key:  "\(Name)-to-default"
-			route_match: {
-				path: "/"
-			}
-			prefix_rewrite: "/"
-            rules: [{
-                constraints: light: [
-                    { cluster_key: "plus-apple", weight: 3 },
-                    { cluster_key: "plus-banana", weight: 1 },
-                    { cluster_key: "plus-lettuce", weight: 1 },
-                    { cluster_key: "plus-tomato", weight: 1 }
-                ]
             }]
 		},
 
