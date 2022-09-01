@@ -428,8 +428,8 @@ import (
 	rules: [{
 		constraints: light: [{
 			cluster_key: _upstream_cluster_key
-			weight:      1
-		}]
+			weight:      int | *1
+		}, ... ]
 	}]
 	zone_key:       mesh.spec.zone
 	prefix_rewrite: string | *"/"
