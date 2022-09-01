@@ -1,10 +1,9 @@
 package greymatter
 
-// WARNING - Configurations in the mesh section must not be changed
-// arbitrarily because a tenant's mesh configurations hook into an existing
-// enterprise's core mesh configurations. Change these values in accordance
-// with enterprise-level configurations. This may require coordination with
-// an enterprise operations team.
+// WARNING - Values in the mesh section must not be changed arbitrarily
+// because a tenant's project hooks into an existing enterprise's mesh.
+// Change these values in accordance with enterprise-level direction. This
+// may require coordination with an operations team.
 mesh: {
 	// Mesh zone must match the enterprise zone so services are discovered
 	// by the greymatter control plane. Consult with the enterprise operations
