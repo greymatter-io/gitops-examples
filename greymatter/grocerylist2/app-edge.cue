@@ -48,32 +48,13 @@ AppEdge: {
 		},
 
 		// Edge config for the AppEdge service
-		// #cluster & {
-		// 	cluster_key:  Name
-		// 	_spire_other: Name
-		// },
-
-        // For application edge's we create a default route (in this case we chose apple).
-        //This will typically be to the ui component of an app stack
-        #route & {
-			domain_key: AppEdgeIngressName
-			route_key:  "\(Name)-to-default"
-			route_match: {
-				path: "/"
-			}
-			prefix_rewrite: "/"
-            // demo of traffic splitting
-            rules: [{
-                constraints: light: [
-                    { cluster_key: "plus-apple", weight: 3 },
-                    { cluster_key: "plus-banana", weight: 1 },
-                    { cluster_key: "plus-lettuce", weight: 1 },
-                    { cluster_key: "plus-tomato", weight: 1 }
-                ]
-            }]
+		#cluster & {
+			cluster_key:  Name
+			_spire_other: Name
 		},
 
-		#route & {
+        // This route needs to remain inplace if you want to access the routes via the dashboard through this application edge node
+        #route & {
 			domain_key: "edge"
 			route_key:  Name
 			route_match: {
@@ -88,8 +69,28 @@ AppEdge: {
 			]
 			prefix_rewrite: "/"
 		},
-
-        // routes apple
+        
+        // For application edge's we create a default route (in this case we chose apple).
+        //This will typically be to the ui component of an app stack
+        #route & {
+			domain_key: AppEdgeIngressName
+			route_key:  "\(Name)-to-default"
+			route_match: {
+				path: "/"
+			}
+			prefix_rewrite: "/"
+            // demo of traffic splitting
+            // you will see a round robin with prefrence to apple
+            rules: [{
+                constraints: light: [
+                    { cluster_key: "plus-apple", weight: 3 },
+                    { cluster_key: "plus-banana", weight: 1 },
+                    { cluster_key: "plus-lettuce", weight: 1 },
+                    { cluster_key: "plus-tomato", weight: 1 }
+                ]
+            }]
+		},
+        // routes to apple <app edge fqdn>/apple
         #route & {
 			domain_key: AppEdgeIngressName
 			route_key:  "\(Name)-to-apple"
@@ -111,7 +112,7 @@ AppEdge: {
                 }]
             }]
 		},
-        // route to banana
+        // route to banana  <app edge fqdn>/banana
         #route & {
 			domain_key: AppEdgeIngressName
 			route_key:  "\(Name)-to-banana"
@@ -133,7 +134,7 @@ AppEdge: {
                 }]
             }]
 		},
-        // route to lettuce
+        // route to lettuce  <app edge fqdn>/lettuce
         #route & {
 			domain_key: AppEdgeIngressName
 			route_key:  "\(Name)-to-lettuce"
@@ -155,7 +156,7 @@ AppEdge: {
                 }]
             }]
 		},
-        // route to tomato
+        // route to tomato  <app edge fqdn>/tomato
         #route & {
 			domain_key: AppEdgeIngressName
 			route_key:  "\(Name)-to-tomato"
@@ -179,6 +180,8 @@ AppEdge: {
 		},
 
 
+        // If you want see the application's edge node in the dashboard
+        // then you need to specify a catalog_entry 
 		#catalog_entry & {
 			name:                      Name
 			mesh_id:                   mesh.metadata.name
@@ -189,7 +192,7 @@ AppEdge: {
 			api_spec_endpoint:         "<APP EDGE FQDN GOES HERE>"
 			business_impact:           "low"
 			enable_instance_metrics:   true
-			enable_historical_metrics: false
+			enable_historical_metrics: true
 		},
 	]
 }
