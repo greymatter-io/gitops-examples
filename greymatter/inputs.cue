@@ -1,6 +1,6 @@
 package greymatter
 
-// WARNING - Values in the mesh section must not be changed arbitrarily
+// INFORMATION - Values in the mesh section must not be changed arbitrarily
 // because a tenant's project hooks into an existing enterprise's mesh.
 // Change these values in accordance with enterprise-level direction. This
 // may require coordination with an operations team.
