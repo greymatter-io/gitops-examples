@@ -18,9 +18,10 @@ AppEdge: {
 			_is_ingress:           true
 			_enable_rbac:          true
 		},
-		// upstream_port -> port your service is listening on,
-		#cluster & {cluster_key: AppEdgeIngressName, _upstream_port: 8080},
-		// #route & {route_key:     AppEdgeIngressName},
+		// <REMOVE THIS DEFAULT ROUTE and the local cluster>
+        // upstream_port -> port your service is listening on,
+        // #cluster & {cluster_key: AppEdgeIngressName, _upstream_port: 8080},
+        // #route & {route_key:     AppEdgeIngressName},
 
 		// egress -> redis
 		#domain & {domain_key: EgressToRedisName, port: defaults.ports.redis_ingress},
@@ -156,7 +157,7 @@ AppEdge: {
                 }]
             }]
 		},
-        // default route
+        // default route (in this case we chose apple)
         #route & {
 			domain_key: AppEdgeIngressName
 			route_key:  "\(Name)-to-default"
@@ -178,9 +179,9 @@ AppEdge: {
 			mesh_id:                   mesh.metadata.name
 			service_id:                Name
 			version:                   "v1.0.0"
-			description:               "AppEdge service that serves up AppEdges"
-			api_endpoint:              "/services/\(Name)/"
-			api_spec_endpoint:         "/services/\(Name)/"
+			description:               "Application Edge node for grocerylist2"
+			api_endpoint:              "<APP EDGE FQDN GOES HERE>"
+			api_spec_endpoint:         "<APP EDGE FQDN GOES HERE>"
 			business_impact:           "low"
 			enable_instance_metrics:   true
 			enable_historical_metrics: false
