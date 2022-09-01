@@ -46,29 +46,6 @@ AppEdge: {
 			domain_keys: [AppEdgeIngressName, EgressToRedisName]
 			listener_keys: [AppEdgeIngressName, EgressToRedisName]
 		},
-
-		// Edge config for the AppEdge service
-		#cluster & {
-			cluster_key:  Name
-			_spire_other: Name
-		},
-
-        // This route needs to remain inplace if you want to access the routes via the dashboard through this application edge node
-        #route & {
-			domain_key: "edge"
-			route_key:  Name
-			route_match: {
-				path: "/services/\(Name)/"
-			}
-			redirects: [
-				{
-					from:          "^/services/\(Name)$"
-					to:            route_match.path
-					redirect_type: "permanent"
-				},
-			]
-			prefix_rewrite: "/"
-		},
         
         // For application edge's we create a default route (in this case we chose apple).
         //This will typically be to the ui component of an app stack
@@ -179,9 +156,32 @@ AppEdge: {
             }]
 		},
 
-
         // If you want see the application's edge node in the dashboard
-        // then you need to specify a catalog_entry 
+        // then you need to specify a cluster object and route object on the gm core edge domain and a catalog entry
+
+        // Edge config for the AppEdge service
+		#cluster & {
+			cluster_key:  Name
+			_spire_other: Name
+		},
+
+        // This route needs to remain inplace if you want to access the routes via the dashboard through this application edge node
+        #route & {
+			domain_key: "edge"
+			route_key:  Name
+			route_match: {
+				path: "/services/\(Name)/"
+			}
+			redirects: [
+				{
+					from:          "^/services/\(Name)$"
+					to:            route_match.path
+					redirect_type: "permanent"
+				},
+			]
+			prefix_rewrite: "/"
+		},
+
 		#catalog_entry & {
 			name:                      Name
 			mesh_id:                   mesh.metadata.name
