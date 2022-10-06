@@ -21,17 +21,23 @@ package grocerylist
 import (
 	// Point to the services folder in the mesh package since that's where we actually 
 	// define our mesh configs for individual applications.
+	"list"
 	core "greymatter.io.examples/greymatter/core:greymatter"
 	grocerylist "greymatter.io.examples/greymatter/grocerylist:greymatter"
 )
 
 grocerylist_config:
-	grocerylist.Banana.config +
-	grocerylist.Apple.config +
-	grocerylist.Lettuce.config +
-	grocerylist.Tomato.config
+	list.Concat([
+		grocerylist.Banana.config,
+		grocerylist.Apple.config,
+		grocerylist.Lettuce.config,
+		grocerylist.Tomato.config,
+	])
 
 configs:
 	// The edge config must come first because services create routes
 	// that reference the edge domain.
-	core.Edge.config + grocerylist_config
+	list.Concat([
+		core.Edge.config,
+		grocerylist_config
+	])
